@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Screens.Register"
+    android:background="@color/appBg"
+    android:padding="15dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Welcome to BackItUp"
+        android:textSize="28sp"
+        android:textColor="@color/appDark"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/registerTitle" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        android:layout_marginTop="15dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/registerTitle"
+        android:id="@+id/registerSubTitle">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:text="About You"
+            android:textSize="22sp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:text="or use existing account."
+            android:textSize="16sp"
+            android:gravity="end"
+            android:paddingRight="5dp"
+            android:textColor="@color/appDark" />
+
+    </LinearLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_h"
+        android:hint="First Name"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edittext_layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/registerSubTitle"
+        android:id="@+id/registerFirstName" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_h"
+        android:hint="Last Name"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edittext_layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/registerFirstName"
+        android:id="@+id/registerLastName" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_h"
+        android:hint="Email"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edittext_layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/registerLastName"
+        android:id="@+id/registerEmail" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_h"
+        android:hint="Password"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edittext_layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/registerEmail"
+        android:id="@+id/registerPassword" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_h"
+        android:text="Sign Up"
+        android:textSize="18sp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/submit_layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registerPassword"
+        android:id="@+id/registerSubmit" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

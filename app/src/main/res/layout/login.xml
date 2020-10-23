@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Screens.Login"
+    android:background="@color/appBg"
+    android:padding="15dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Welcome to BackItUp"
+        android:textSize="28sp"
+        android:textColor="@color/appDark"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/loginTitle" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        android:layout_marginTop="15dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loginTitle"
+        android:id="@+id/loginSubTitle">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:text="Get Back In"
+            android:textSize="22sp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:text="or create new account."
+            android:textSize="16sp"
+            android:gravity="end"
+            android:paddingRight="5dp"
+            android:textColor="@color/appDark" />
+
+    </LinearLayout>
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_h"
+        android:hint="Email"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edittext_layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loginSubTitle"
+        android:id="@+id/loginEmail" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_h"
+        android:hint="Password"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edittext_layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loginEmail"
+        android:id="@+id/loginPassword" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Forgot Your Password ?"
+        android:textSize="14sp"
+        android:textColor="@color/appDark"
+        android:gravity="end"
+        android:paddingRight="5dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/loginPassword"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/loginForgotPassword"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_h"
+        android:text="Sign In"
+        android:textSize="18sp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/submit_layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginForgotPassword"
+        android:id="@+id/loginSubmit" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
