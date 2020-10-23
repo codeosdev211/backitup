@@ -67,15 +67,16 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:background="@drawable/submit_layout"
-            android:src="@drawable/download"
+            android:src="@drawable/share"
             android:layout_margin="5dp"/>
 
         <ImageButton
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:background="@drawable/submit_layout"
-            android:src="@drawable/share"
+            android:src="@drawable/download"
             android:layout_margin="5dp"/>
+
     </LinearLayout>
 
 
