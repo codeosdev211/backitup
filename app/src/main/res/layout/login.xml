@@ -46,7 +46,8 @@
             android:textSize="16sp"
             android:gravity="end"
             android:paddingRight="5dp"
-            android:textColor="@color/appDark" />
+            android:textColor="@color/appDark"
+            android:onClick="goToRegister"/>
 
     </LinearLayout>
 
@@ -89,6 +90,7 @@
         app:layout_constraintTop_toBottomOf="@id/loginPassword"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        android:onClick="recoverPassword"
         android:id="@+id/loginForgotPassword"/>
 
     <Button
@@ -101,6 +103,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginForgotPassword"
+        android:onClick="signinUser"
         android:id="@+id/loginSubmit" />
 
 

@@ -36,7 +36,7 @@ public class Login extends AppCompatActivity {
 
 
         }catch(Exception error) {
-
+            toast("Could not load page", 0);
         }
     }
 
@@ -99,7 +99,9 @@ public class Login extends AppCompatActivity {
                     if(response.getString("Status").equals("0")) {
                         toast(response.getString("Msg"), 1);
                     }else{
-                        new AppPref().localData(getApplicationContext(), 'S', "BU", response.getJSONArray("Data").getJSONObject(0).toString());
+                        AppPref localPref = new AppPref();
+                        localPref.localData(getApplicationContext(), 'S', "BU", response.getJSONArray("Data").getJSONObject(0).toString());
+                        localPref.localData(getApplicationContext(), 'S', "isLoggedIn", "Yes");
                         toast("Logging In...", 0);
                         redirect(Dashboard.class);
                     }
