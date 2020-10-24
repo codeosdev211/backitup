@@ -9,5 +9,4 @@ import java.util.Map;
 public interface IAPI {
     void onSuccess(JSONObject response);
     void onError(VolleyError error);
-    Map<String, String> setHeaders();
 }

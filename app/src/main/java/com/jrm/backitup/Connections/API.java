@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class API {
@@ -24,7 +25,7 @@ public class API {
                            final IAPI apiInterface) {
         try {
             JSONObject data = null;
-            if(data != null) {
+            if(requestData != null) {
                 data = new JSONObject(new Gson().toJson(requestData));
             }
             RequestQueue requestQueue = Volley.newRequestQueue(context);
@@ -43,7 +44,10 @@ public class API {
                     }){
                         @Override
                         public Map<String, String> getHeaders() {
-                            return apiInterface.setHeaders();
+                            Map<String, String> headers = new HashMap();
+                            headers.put("Content-Type", "application/json;utf-8;");
+                            headers.put("Accept", "application/json");
+                            return headers;
                         }
                 };
 
