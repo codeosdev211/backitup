@@ -16,10 +16,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(new AppPref().localData(getApplicationContext(), 'G', "isLoggedIn", "").equals("No")) {
-            redirect(Login.class);
-        }else{
+        if(new AppPref().localData(getApplicationContext(), 'G', "isLoggedIn", "").equals("Yes")) {
             redirect(Dashboard.class);
+        }else{
+            redirect(Login.class);
         }
     }
 

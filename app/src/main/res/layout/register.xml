@@ -8,7 +8,7 @@
     android:background="@color/appBg"
     android:padding="15dp">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Welcome to BackItUp"
@@ -20,7 +20,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:id="@+id/registerTitle" />
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -35,8 +35,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="4"
+            android:textColor="@color/black"
             android:text="About You"
-            android:textSize="22sp"/>
+            android:textSize="20sp"/>
 
         <TextView
             android:layout_width="0dp"
@@ -50,12 +51,14 @@
             android:onClick="goToLogin"/>
 
 
-    </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:layout_width="match_parent"
         android:layout_height="@dimen/edittext_h"
         android:hint="First Name"
+        android:textColorHint="@color/grey"
+        android:textColor="@color/black"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
         android:layout_marginTop="20dp"
@@ -65,10 +68,12 @@
         app:layout_constraintTop_toBottomOf="@id/registerSubTitle"
         android:id="@+id/registerFirstName" />
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:layout_width="match_parent"
         android:layout_height="@dimen/edittext_h"
         android:hint="Last Name"
+        android:textColorHint="@color/grey"
+        android:textColor="@color/black"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
         android:layout_marginTop="20dp"
@@ -78,10 +83,12 @@
         app:layout_constraintTop_toBottomOf="@id/registerFirstName"
         android:id="@+id/registerLastName" />
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:layout_width="match_parent"
         android:layout_height="@dimen/edittext_h"
         android:hint="Email"
+        android:textColorHint="@color/grey"
+        android:textColor="@color/black"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
         android:layout_marginTop="20dp"
@@ -91,10 +98,12 @@
         app:layout_constraintTop_toBottomOf="@id/registerLastName"
         android:id="@+id/registerEmail" />
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:layout_width="match_parent"
         android:layout_height="@dimen/edittext_h"
         android:hint="Password"
+        android:textColorHint="@color/grey"
+        android:textColor="@color/black"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
         android:layout_marginTop="20dp"
@@ -104,11 +113,12 @@
         app:layout_constraintTop_toBottomOf="@id/registerEmail"
         android:id="@+id/registerPassword" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_h"
         android:text="Sign Up"
         android:textSize="18sp"
+        android:textColor="@color/white"
         android:layout_marginTop="30dp"
         android:background="@drawable/submit_layout"
         app:layout_constraintLeft_toLeftOf="parent"

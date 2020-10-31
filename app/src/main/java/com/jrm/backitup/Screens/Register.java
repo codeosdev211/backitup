@@ -97,8 +97,8 @@ public class Register extends AppCompatActivity {
             @Override
             public void onSuccess(JSONObject response) {
                 try {
-                    if(response.getString("Status").equals("0")) {
-                        toast(response.getString("Msg"), 1);
+                    if(response.getString("status").equals("1")) {
+                        toast(response.getString("msg"), 1);
                     }else{
                         toast("User Created, redirecting to login page...", 1);
                         redirect(Login.class);

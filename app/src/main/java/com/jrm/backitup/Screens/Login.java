@@ -96,11 +96,11 @@ public class Login extends AppCompatActivity {
             @Override
             public void onSuccess(JSONObject response) {
                 try {
-                    if(response.getString("Status").equals("0")) {
-                        toast(response.getString("Msg"), 1);
+                    if(response.getString("status").equals("1")) {
+                        toast(response.getString("msg"), 1);
                     }else{
                         AppPref localPref = new AppPref();
-                        localPref.localData(getApplicationContext(), 'S', "BU", response.getJSONArray("Data").getJSONObject(0).toString());
+                        localPref.localData(getApplicationContext(), 'S', "BU", response.getJSONArray("data").getJSONObject(0).toString());
                         localPref.localData(getApplicationContext(), 'S', "isLoggedIn", "Yes");
                         toast("Logging In...", 0);
                         redirect(Dashboard.class);
