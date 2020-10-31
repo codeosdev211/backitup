@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.appcompat.widget.LinearLayoutCompat
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/popup_layout"
     android:orientation="vertical">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Upload Files"
@@ -15,12 +15,12 @@
         android:paddingTop="10dp"
         android:gravity="center"/>
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:src="@drawable/upload_icon"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="No. of files selected: "
@@ -31,31 +31,33 @@
         android:layout_marginBottom="10dp"
         android:id="@+id/selectedFileCount"/>
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginBottom="20dp"
         android:gravity="center">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Select"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textColor="@color/white"
             android:background="@drawable/submit_layout"
-            android:layout_marginRight="25dp" />
+            android:layout_marginRight="25dp"
+            android:id="@+id/selectBtn"/>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Upload"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textColor="@color/white"
             android:background="@drawable/submit_layout"
-            android:layout_marginLeft="25dp"/>
+            android:layout_marginLeft="25dp"
+            android:id="@+id/uploadBtn"/>
 
-    </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
-</LinearLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>
