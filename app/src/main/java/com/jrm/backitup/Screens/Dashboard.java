@@ -21,15 +21,23 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.jrm.backitup.Local.AppPref;
+import com.jrm.backitup.Local.CompressionUtils;
 import com.jrm.backitup.R;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.LineIterator;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.util.Objects;
 
 
 public class Dashboard extends AppCompatActivity {
@@ -97,10 +105,20 @@ public class Dashboard extends AppCompatActivity {
             // if multiple select then into if else single selection
             if(data.getClipData() != null) {
                 for(int each = 0; each < data.getClipData().getItemCount(); each++) {
-//                    appendFilesList(data.getClipData().getItemAt(each).getUri().getPath());
+                    appendFilesList(data.getClipData().getItemAt(each).getUri());
                 }
             }else{
-                appendFilesList(data.getData());
+//                appendFilesList(data.getData());
+                Uri fileUri = data.getData();
+                CompressionUtils compression = new CompressionUtils();
+                StringBuilder builder = new StringBuilder();
+                InputStream stream = getContentResolver().openInputStream(fileUri);
+                byte[] bytes =  compression.compress(IOUtils.toByteArray(stream));
+
+                String destPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + "/" + getFileName(fileUri);
+                IOUtils.write(compression.decompress(bytes), new FileOutputStream(destPath));
+                toast("File Written", 1);
+
             }
         }
         }catch(Exception error) {
@@ -113,12 +131,15 @@ public class Dashboard extends AppCompatActivity {
             // converting files to byte array
             String fileName = getFileName(fileUri);
             InputStream stream = getContentResolver().openInputStream(fileUri);
-            byte[] data = getBytes(stream);
+//            byte[] data = getBytes(stream);
+            byte[] data = IOUtils.toByteArray(stream);
             // download files code below
             String destPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + "/" + fileName;
             FileOutputStream outStream = new FileOutputStream(destPath);
-            outStream.write(data);
-            outStream.close();
+//            outStream.write(data);
+//            outStream.close();
+            IOUtils.write(data, outStream);
+            toast("written data", 1);
 
         }catch(Exception error) {
             toast("Error" + error.getMessage(), 1);
@@ -139,9 +160,11 @@ public class Dashboard extends AppCompatActivity {
         return fileName;
     }
 
+
     private byte[] getBytes(InputStream stream) throws Exception {
         ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-        int bufferSize = 1024;
+        // 1MB buffer size
+        int bufferSize = 1048576;
         byte[] buffer = new byte[bufferSize];
 
         int len = 0;
