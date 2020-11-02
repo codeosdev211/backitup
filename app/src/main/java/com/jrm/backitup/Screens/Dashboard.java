@@ -22,12 +22,15 @@ import android.widget.Toast;
 
 import com.jrm.backitup.Local.AppPref;
 import com.jrm.backitup.Local.CompressionUtils;
+import com.jrm.backitup.Local.FileHelper;
+import com.jrm.backitup.Models.BF;
 import com.jrm.backitup.R;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -37,6 +40,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Objects;
 
 
@@ -45,6 +49,7 @@ public class Dashboard extends AppCompatActivity {
     JSONObject currentUser = null;
     private final int requestCode = 911;
     private final int fileCode = 211;
+    JSONArray fileList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,33 +106,41 @@ public class Dashboard extends AppCompatActivity {
     public void onActivityResult(int fileCode, int resultCode, Intent data) {
         super.onActivityResult(fileCode, resultCode, data);
         try {
-        if (fileCode == this.fileCode && resultCode == -1) {
-            // if multiple select then into if else single selection
-            if(data.getClipData() != null) {
-                for(int each = 0; each < data.getClipData().getItemCount(); each++) {
-//                    appendFilesList(data.getClipData().getItemAt(each).getUri());
+            fileList = new JSONArray();
+            if (fileCode == this.fileCode && resultCode == -1) {
+                // if multiple select then into if else single selection
+                if(data.getClipData() != null) {
+                    for(int each = 0; each < data.getClipData().getItemCount(); each++) {
+                        appendFileToList(data.getClipData().getItemAt(each).getUri());
+                    }
+                }else{
+                    appendFileToList(data.getData());
                 }
-            }else{
-//                appendFilesList(data.getData());
-                Uri fileUri = data.getData();
-                CompressionUtils compression = new CompressionUtils();
-                StringBuilder builder = new StringBuilder();
-                InputStream stream = getContentResolver().openInputStream(fileUri);
-                byte[] bytes =  compression.compress(IOUtils.toByteArray(stream));
-
-                String destPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + "/" + getFileName(fileUri);
-                IOUtils.write(compression.decompress(bytes), new FileOutputStream(destPath));
-                toast("File Written", 1);
-
+                // call api below
             }
-        }
         }catch(Exception error) {
             toast(error.getMessage(), 1);
         }
     }
 
     private void appendFileToList(Uri fileUri) {
+        try {
+            BF selected = new BF();
+            FileHelper helper = new FileHelper();
+            selected.Id(0);
+            selected.Code("");
+            selected.Name(helper.getAttribute(getApplicationContext(), fileUri, OpenableColumns.DISPLAY_NAME));
+            selected.OriginalSize(helper.getAttribute(getApplicationContext(), fileUri, OpenableColumns.SIZE));
+            selected.OwnerCode("");// add later
+            selected.Extension("");// add later
+            selected.FileData(helper.readFile(getApplicationContext(), fileUri).toString());
+            fileList.put(selected);
+        }catch(Exception error) {
+            toast(error.getMessage(), 1);
+        }
     }
+
+
 
     private void appendFile(Uri fileUri) {
         try {
