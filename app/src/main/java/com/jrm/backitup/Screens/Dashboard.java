@@ -20,10 +20,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
+import com.jrm.backitup.Connections.API;
+import com.jrm.backitup.Connections.IAPI;
 import com.jrm.backitup.Local.AppPref;
 import com.jrm.backitup.Local.CompressionUtils;
 import com.jrm.backitup.Local.FileHelper;
 import com.jrm.backitup.Models.BF;
+import com.jrm.backitup.Models.BU;
 import com.jrm.backitup.R;
 
 import org.apache.commons.io.FileUtils;
@@ -58,6 +62,7 @@ public class Dashboard extends AppCompatActivity {
         try {
             currentUser = new JSONObject(new AppPref().localData(getApplicationContext(), 'G', "BU", ""));
             checkPermission();
+            callList();
         }catch(Exception error) {
             toast("Could not load page", 1);
         }
@@ -116,7 +121,7 @@ public class Dashboard extends AppCompatActivity {
                 }else{
                     appendFileToList(data.getData());
                 }
-                // call api below
+                toast("Files Selected", 1);
             }
         }catch(Exception error) {
             toast(error.getMessage(), 1);
@@ -131,51 +136,14 @@ public class Dashboard extends AppCompatActivity {
             selected.Code("");
             selected.Name(helper.getAttribute(getApplicationContext(), fileUri, OpenableColumns.DISPLAY_NAME));
             selected.OriginalSize(helper.getAttribute(getApplicationContext(), fileUri, OpenableColumns.SIZE));
-            selected.OwnerCode("");// add later
-            selected.Extension("");// add later
+            selected.OwnerCode(currentUser.getString("ownerCode"));
+            selected.Extension(fileUri.getPath().replaceFirst("^.*/[^/]*(\\.[^\\./]*|)$", "$1"));
             selected.FileData(helper.readFile(getApplicationContext(), fileUri).toString());
             fileList.put(selected);
         }catch(Exception error) {
             toast(error.getMessage(), 1);
         }
     }
-
-
-
-    private void appendFile(Uri fileUri) {
-        try {
-            // converting files to byte array
-            String fileName = getFileName(fileUri);
-            InputStream stream = getContentResolver().openInputStream(fileUri);
-//            byte[] data = getBytes(stream);
-            byte[] data = IOUtils.toByteArray(stream);
-            // download files code below
-            String destPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + "/" + fileName;
-            FileOutputStream outStream = new FileOutputStream(destPath);
-//            outStream.write(data);
-//            outStream.close();
-            IOUtils.write(data, outStream);
-            toast("written data", 1);
-
-        }catch(Exception error) {
-            toast("Error" + error.getMessage(), 1);
-        }
-    }
-
-    private String getFileName(Uri uri) {
-        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-        if(cursor.getCount() <= 0) {
-            toast("cant obtain file name", 1);
-            cursor.close();
-        }
-        cursor.moveToFirst();
-
-        String fileName = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME));
-
-        cursor.close();
-        return fileName;
-    }
-
 
     // onclick
     private void chooseFiles() {
@@ -186,7 +154,13 @@ public class Dashboard extends AppCompatActivity {
             startActivityForResult(file, fileCode);
     }
 
-    private void uploadFiles() { }
+    private void uploadFiles() {
+        if(fileList.length() == 0) {
+            toast("No files selected", 1);
+        }else{
+            sendFiles(fileList);
+        }
+    }
 
     public void selectFiles(View view) {
         try {
@@ -218,6 +192,74 @@ public class Dashboard extends AppCompatActivity {
         }
     }
 
+    // list handling
+    private void callList() {
+        try {
+            JSONArray request = new JSONArray();
+            BU user = new BU();
+            user.Code(currentUser.getString("code"));
+            request.put(user);
+            listFiles(request);
+        }catch(Exception error) {
+            toast(error.getMessage(), 1);
+        }
+    }
+    private void loadList(JSONArray data) {
+        try {
+            if(data.length() == 0 || data == null) {
+                toast("No Files Found!", 1);
+            }else{
+                // load adapter
+            }
+        }catch(Exception error) {
+            toast(error.getMessage(), 1);
+        }
+    }
+
+    // api handling
+    private void sendFiles(JSONArray data) {
+        new API().callServer(getApplicationContext(), 1, "sendFile", data, new IAPI() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                try {
+                    if(response.getString("status").equals("1")) {
+                        toast(response.getString("msg"), 1);
+                    }else{
+                        toast("File(s) uploaded!", 0);
+                    }
+                }catch(Exception error) {
+                    toast(error.getMessage(), 1);
+                }
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                toast(error.getMessage(), 1);
+            }
+        });
+    }
+
+    private void listFiles(JSONArray data) {
+        new API().callServer(getApplicationContext(), 1, "listFile", data, new IAPI() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                try {
+                    if(response.getString("status").equals("1")) {
+                        toast(response.getString("msg"), 1);
+                    }else{
+                        loadList(response.getJSONArray("data"));
+                    }
+                }catch(Exception error) {
+                    toast(error.getMessage(), 1);
+                }
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                toast(error.getMessage(), 1);
+            }
+        });
+    }
 
 
 
