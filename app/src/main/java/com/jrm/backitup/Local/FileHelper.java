@@ -1,8 +1,10 @@
 package com.jrm.backitup.Local;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 
 import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
@@ -13,7 +15,8 @@ import java.io.InputStream;
 public class FileHelper {
 
     public byte[] readFile(Context context, Uri fileData) throws Exception {
-        return new CompressionUtils().compress(IOUtils.toByteArray(context.getContentResolver().openInputStream(fileData)));
+        return new CompressionUtils().compress(IOUtils.toByteArray(
+                context.getContentResolver().openInputStream(fileData)));
     }
 
     public void writeFile(JSONObject fileData) throws Exception {
@@ -21,7 +24,17 @@ public class FileHelper {
         IOUtils.write(new CompressionUtils().decompress(fileData.getString("fileData").getBytes()), new FileOutputStream(destination));
     }
 
-
+    public String getAttribute(Context context, Uri data, String attribute) {
+        Cursor cursor = context.getContentResolver().query(data, null, null, null, null);
+        if(cursor.getCount() <= 0) {
+            cursor.close();
+            return "";
+        }
+        cursor.moveToFirst();
+        String requested = cursor.getString(cursor.getColumnIndexOrThrow(attribute));
+        cursor.close();
+        return requested;
+    }
 
 
 }

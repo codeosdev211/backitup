@@ -105,7 +105,7 @@ public class Dashboard extends AppCompatActivity {
             // if multiple select then into if else single selection
             if(data.getClipData() != null) {
                 for(int each = 0; each < data.getClipData().getItemCount(); each++) {
-                    appendFilesList(data.getClipData().getItemAt(each).getUri());
+//                    appendFilesList(data.getClipData().getItemAt(each).getUri());
                 }
             }else{
 //                appendFilesList(data.getData());
@@ -126,7 +126,10 @@ public class Dashboard extends AppCompatActivity {
         }
     }
 
-    private void appendFilesList(Uri fileUri) {
+    private void appendFileToList(Uri fileUri) {
+    }
+
+    private void appendFile(Uri fileUri) {
         try {
             // converting files to byte array
             String fileName = getFileName(fileUri);
@@ -160,19 +163,6 @@ public class Dashboard extends AppCompatActivity {
         return fileName;
     }
 
-
-    private byte[] getBytes(InputStream stream) throws Exception {
-        ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-        // 1MB buffer size
-        int bufferSize = 1048576;
-        byte[] buffer = new byte[bufferSize];
-
-        int len = 0;
-        while((len = stream.read(buffer)) != -1) {
-            outStream.write(buffer, 0, len);
-        }
-        return outStream.toByteArray();
-    }
 
     // onclick
     private void chooseFiles() {
