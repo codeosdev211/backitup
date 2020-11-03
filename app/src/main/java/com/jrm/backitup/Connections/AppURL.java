@@ -9,9 +9,9 @@ public class AppURL {
                 return baseURL + "/user/login";
             case "register":
                 return baseURL + "/user/register";
-            case "addFiles":
+            case "sendFile":
                 return baseURL + "/files/add";
-            case "listFiles":
+            case "listFile":
                 return baseURL + "/files/list";
             default:
                 break;

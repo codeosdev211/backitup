@@ -136,9 +136,9 @@ public class Dashboard extends AppCompatActivity {
             selected.Code("");
             selected.Name(helper.getAttribute(getApplicationContext(), fileUri, OpenableColumns.DISPLAY_NAME));
             selected.OriginalSize(helper.getAttribute(getApplicationContext(), fileUri, OpenableColumns.SIZE));
-            selected.OwnerCode(currentUser.getString("ownerCode"));
-            selected.Extension(fileUri.getPath().replaceFirst("^.*/[^/]*(\\.[^\\./]*|)$", "$1"));
-            selected.FileData(helper.readFile(getApplicationContext(), fileUri).toString());
+            selected.OwnerCode(currentUser.getString("code"));
+            selected.Extension(helper.getAttribute(getApplicationContext(), fileUri, OpenableColumns.DISPLAY_NAME).replaceFirst("^.*/[^/]*(\\.[^\\./]*|)$", "$1"));
+            selected.FileData(new String(helper.readFile(getApplicationContext(), fileUri)));
             fileList.put(selected);
         }catch(Exception error) {
             toast(error.getMessage(), 1);
@@ -247,7 +247,9 @@ public class Dashboard extends AppCompatActivity {
                     if(response.getString("status").equals("1")) {
                         toast(response.getString("msg"), 1);
                     }else{
-                        loadList(response.getJSONArray("data"));
+//                        loadList(response.getJSONArray("data"));
+                        new FileHelper().writeFile(response.getJSONArray("data").getJSONObject(0));
+                        toast("file written i guess!", 1);
                     }
                 }catch(Exception error) {
                     toast(error.getMessage(), 1);
