@@ -8,6 +8,7 @@ public class BF {
     private String originalSize;
     private String ownerCode;
     private String fileData;
+//    private byte[] fileData;
 
     public int Id(int value) {
         return (value == -1) ? id : (id = value);
@@ -36,5 +37,7 @@ public class BF {
     public String FileData(String value) {
         return (value == null) ? fileData : (fileData = value);
     }
-
+//    public byte[] FileData(byte[] value) {
+//        return (value == null) ? fileData : (fileData = value);
+//    }
 }

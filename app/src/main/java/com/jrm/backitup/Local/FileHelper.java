@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Base64;
 
 import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
@@ -16,15 +17,12 @@ public class FileHelper {
 
 
     public byte[] readFile(Context context, Uri fileData) throws Exception {
-        return new CompressionUtils().compress(new String(IOUtils.toByteArray(
-                context.getContentResolver().openInputStream(fileData))));
+        return IOUtils.toByteArray(context.getContentResolver().openInputStream(fileData));
     }
 
     public void writeFile(JSONObject fileData) throws Exception {
         String destination = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + "/" + fileData.getString("name");
-        byte[] file = new CompressionUtils().decompress(fileData.getString("fileData"));
-        IOUtils.write(file, new FileOutputStream(destination));
-//        IOUtils.write(new CompressionUtils().decompress(fileData.getString("fileData").getBytes("UTF-8")), new FileOutputStream(destination));
+        IOUtils.write(Base64.decode(fileData.get("fileData").toString().getBytes(), 0), new FileOutputStream(destination));
     }
 
     public String getAttribute(Context context, Uri data, String attribute) {

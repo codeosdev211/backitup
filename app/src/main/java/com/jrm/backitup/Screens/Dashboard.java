@@ -8,12 +8,10 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.OpenableColumns;
-import android.util.Log;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,28 +22,13 @@ import com.android.volley.VolleyError;
 import com.jrm.backitup.Connections.API;
 import com.jrm.backitup.Connections.IAPI;
 import com.jrm.backitup.Local.AppPref;
-import com.jrm.backitup.Local.CompressionUtils;
 import com.jrm.backitup.Local.FileHelper;
 import com.jrm.backitup.Models.BF;
 import com.jrm.backitup.Models.BU;
 import com.jrm.backitup.R;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.LineIterator;
-import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Objects;
 
 
 public class Dashboard extends AppCompatActivity {
@@ -137,8 +120,10 @@ public class Dashboard extends AppCompatActivity {
             selected.Name(helper.getAttribute(getApplicationContext(), fileUri, OpenableColumns.DISPLAY_NAME));
             selected.OriginalSize(helper.getAttribute(getApplicationContext(), fileUri, OpenableColumns.SIZE));
             selected.OwnerCode(currentUser.getString("code"));
-            selected.Extension(helper.getAttribute(getApplicationContext(), fileUri, OpenableColumns.DISPLAY_NAME).replaceFirst("^.*/[^/]*(\\.[^\\./]*|)$", "$1"));
-            selected.FileData(new String(helper.readFile(getApplicationContext(), fileUri)));
+//            selected.Extension(helper.getAttribute(getApplicationContext(), fileUri, OpenableColumns.DISPLAY_NAME).replaceFirst("^.*/[^/]*(\\.[^\\./]*|)$", "$1"));
+            selected.Extension("none");
+//            selected.FileData(new String(helper.readFile(getApplicationContext(), fileUri)));
+            selected.FileData(Base64.encode(helper.readFile(getApplicationContext(), fileUri), 0).toString());
             fileList.put(selected);
         }catch(Exception error) {
             toast(error.getMessage(), 1);
