@@ -7,8 +7,7 @@ public class BF {
     private String extension;
     private String originalSize;
     private String ownerCode;
-    private String fileData;
-//    private byte[] fileData;
+    private String savedTo;
 
     public int Id(int value) {
         return (value == -1) ? id : (id = value);
@@ -34,10 +33,8 @@ public class BF {
         return (value == null) ? ownerCode : (ownerCode = value);
     }
 
-    public String FileData(String value) {
-        return (value == null) ? fileData : (fileData = value);
+    public String SavedTo(String value) {
+        return (value == null) ? savedTo : (savedTo = value);
     }
-//    public byte[] FileData(byte[] value) {
-//        return (value == null) ? fileData : (fileData = value);
-//    }
+
 }

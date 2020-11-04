@@ -43,7 +43,7 @@ public class Dashboard extends AppCompatActivity {
     JSONObject currentUser = null;
     private final int requestCode = 911;
     private final int fileCode = 211;
-    JSONArray fileList;
+    FileHelper fileHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,15 +101,15 @@ public class Dashboard extends AppCompatActivity {
     public void onActivityResult(int fileCode, int resultCode, Intent data) {
         super.onActivityResult(fileCode, resultCode, data);
         try {
-            fileList = new JSONArray();
+            fileHelper = new FileHelper(getApplicationContext());
             if (fileCode == this.fileCode && resultCode == -1) {
                 // if multiple select then into if else single selection
                 if(data.getClipData() != null) {
                     for(int each = 0; each < data.getClipData().getItemCount(); each++) {
-                        appendFileToList(data.getClipData().getItemAt(each).getUri());
+                        fileHelper.appendFile(data.getClipData().getItemAt(each).getUri());
                     }
                 }else{
-                    appendFileToList(data.getData());
+                    fileHelper.appendFile(data.getData());
                 }
                 toast("Files Selected", 1);
             }
@@ -118,25 +118,6 @@ public class Dashboard extends AppCompatActivity {
         }
     }
 
-    private void appendFileToList(Uri fileUri) {
-        try {
-            BF selected = new BF();
-            FileHelper helper = new FileHelper();
-            selected.Id(0);
-            selected.Code("");
-            selected.Name(helper.getAttribute(getApplicationContext(), fileUri, OpenableColumns.DISPLAY_NAME));
-            selected.OriginalSize(helper.getAttribute(getApplicationContext(), fileUri, OpenableColumns.SIZE));
-            selected.OwnerCode(currentUser.getString("code"));
-//            selected.Extension(helper.getAttribute(getApplicationContext(), fileUri, OpenableColumns.DISPLAY_NAME).replaceFirst("^.*/[^/]*(\\.[^\\./]*|)$", "$1"));
-            selected.Extension("none");
-            selected.FileData(Base64.encodeBase64String(helper.readFile(getApplicationContext(), fileUri)));
-//            selected.FileData(helper.readFile(getApplicationContext(), fileUri)));
-//            selected.FileData(compress(helper.readFile(getApplicationContext(), fileUri)));
-            fileList.put(selected);
-        }catch(Exception error) {
-            toast(error.getMessage(), 1);
-        }
-    }
 
 
     // onclick
@@ -149,10 +130,10 @@ public class Dashboard extends AppCompatActivity {
     }
 
     private void uploadFiles() {
-        if(fileList.length() == 0) {
+        if(fileHelper.getSize() == 0) {
             toast("No files selected", 1);
         }else{
-            sendFiles(fileList);
+            sendFiles(fileHelper.getList());
         }
     }
 
