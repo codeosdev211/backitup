@@ -10,8 +10,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.OpenableColumns;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.google.gson.Gson;
 import com.jrm.backitup.Connections.API;
 import com.jrm.backitup.Connections.IAPI;
 import com.jrm.backitup.Local.AppPref;
@@ -27,8 +28,14 @@ import com.jrm.backitup.Models.BF;
 import com.jrm.backitup.Models.BU;
 import com.jrm.backitup.R;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+import java.util.zip.Deflater;
 
 
 public class Dashboard extends AppCompatActivity {
@@ -122,13 +129,15 @@ public class Dashboard extends AppCompatActivity {
             selected.OwnerCode(currentUser.getString("code"));
 //            selected.Extension(helper.getAttribute(getApplicationContext(), fileUri, OpenableColumns.DISPLAY_NAME).replaceFirst("^.*/[^/]*(\\.[^\\./]*|)$", "$1"));
             selected.Extension("none");
-//            selected.FileData(new String(helper.readFile(getApplicationContext(), fileUri)));
-            selected.FileData(Base64.encode(helper.readFile(getApplicationContext(), fileUri), 0).toString());
+            selected.FileData(Base64.encodeBase64String(helper.readFile(getApplicationContext(), fileUri)));
+//            selected.FileData(helper.readFile(getApplicationContext(), fileUri)));
+//            selected.FileData(compress(helper.readFile(getApplicationContext(), fileUri)));
             fileList.put(selected);
         }catch(Exception error) {
             toast(error.getMessage(), 1);
         }
     }
+
 
     // onclick
     private void chooseFiles() {
@@ -233,8 +242,8 @@ public class Dashboard extends AppCompatActivity {
                         toast(response.getString("msg"), 1);
                     }else{
 //                        loadList(response.getJSONArray("data"));
-                        new FileHelper().writeFile(response.getJSONArray("data").getJSONObject(0));
-                        toast("file written i guess!", 1);
+//                        new FileHelper().writeFile(response.getJSONArray("data").getJSONObject(0));
+
                     }
                 }catch(Exception error) {
                     toast(error.getMessage(), 1);

@@ -1,6 +1,7 @@
 package com.jrm.backitup.Connections;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -27,6 +28,7 @@ public class API {
             JSONObject data = null;
             if(requestData != null) {
                 data = new JSONObject(new Gson().toJson(requestData));
+                Log.d("request", data.toString());
             }
             RequestQueue requestQueue = Volley.newRequestQueue(context);
             JsonObjectRequest request = new JsonObjectRequest(
