@@ -133,7 +133,7 @@ public class Dashboard extends AppCompatActivity {
         if(fileHelper.getSize() == 0) {
             toast("No files selected", 1);
         }else{
-            sendFiles(fileHelper.getList());
+            sendFiles(new JSONArray().put(fileHelper.getList()));
         }
     }
 

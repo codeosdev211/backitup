@@ -10,6 +10,7 @@ import android.util.Base64;
 import android.widget.Toast;
 
 import com.jrm.backitup.Models.BF;
+import com.jrm.backitup.Models.FileInfo;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
@@ -18,18 +19,20 @@ import org.json.JSONObject;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class FileHelper {
 
     private Context context;
-    private JSONArray fileList, dataList;
+    private ArrayList<BF> fileList;
+    private ArrayList<String> dataList;
     private int fileCount;
 
 
     public FileHelper(Context context) {
         this.context = context;
-        this.fileList = new JSONArray();
-        this.dataList = new JSONArray();
+        this.fileList = new ArrayList<>();
+        this.dataList = new ArrayList<>();
         this.fileCount = 0;
     }
 
@@ -44,20 +47,20 @@ public class FileHelper {
             file.Name(fileName);
             file.OriginalSize(getAttribute(eachFile, OpenableColumns.SIZE));
             file.Extension(FilenameUtils.getExtension(fileName));
-            fileList.put(file);
+            fileList.add(file);
             InputStream stream = context.getApplicationContext().getContentResolver().openInputStream(eachFile);
-            dataList.put(Base64.encodeToString(IOUtils.toByteArray(stream), 0));
+            dataList.add(Base64.encodeToString(IOUtils.toByteArray(stream), 0));
             fileCount++;
         }catch(Exception error) {
             Toast.makeText(context.getApplicationContext(), "Could not append a file", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public JSONArray getList() {
-        JSONArray requestData = new JSONArray();
-        requestData.put(fileList);
-        requestData.put(dataList);
-        return requestData;
+    public FileInfo getList() {
+        FileInfo data = new FileInfo();
+        data.FileInfos(fileList);
+        data.FileData(dataList);
+        return data;
     }
 
     public void writeFile(JSONObject fileData) throws Exception {
@@ -76,6 +79,5 @@ public class FileHelper {
         cursor.close();
         return requested;
     }
-
 
 }
