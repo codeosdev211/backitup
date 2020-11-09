@@ -4,6 +4,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.content.Intent;
@@ -16,12 +18,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.jrm.backitup.Connections.API;
 import com.jrm.backitup.Connections.IAPI;
+import com.jrm.backitup.Lists.FileListAdp;
 import com.jrm.backitup.Local.AppPref;
 import com.jrm.backitup.Local.FileHelper;
 import com.jrm.backitup.Models.BF;
@@ -45,6 +49,12 @@ public class Dashboard extends AppCompatActivity {
     private final int fileCode = 211;
     FileHelper fileHelper;
 
+    TextView userName;
+
+    RecyclerView fileList;
+    RecyclerView.LayoutManager layoutMng;
+    FileListAdp fileAdp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +62,15 @@ public class Dashboard extends AppCompatActivity {
         try {
             currentUser = new JSONObject(new AppPref().localData(getApplicationContext(), 'G', "BU", ""));
             checkPermission();
+
+            userName = (TextView) findViewById(R.id.dashUserName);
+            fileList = (RecyclerView) findViewById(R.id.dashFilesList);
+
+            userName.setText("Hey, " + currentUser.getString("firstName"));
+            layoutMng = new LinearLayoutManager(this);
+            fileList.setLayoutManager(layoutMng);
+            fileAdp = new FileListAdp(this);
+
             callList();
         }catch(Exception error) {
             toast("Could not load page", 1);
@@ -179,17 +198,22 @@ public class Dashboard extends AppCompatActivity {
             toast(error.getMessage(), 1);
         }
     }
-    private void loadList(JSONArray data) {
+
+    private void loadList(JSONArray files) {
         try {
-            if(data.length() == 0 || data == null) {
+            if(files.length() == 0 || files == null) {
                 toast("No Files Found!", 1);
             }else{
-                // load adapter
+                fileList.removeAllViews();
+                fileAdp.add(files);
+                fileList.setAdapter(fileAdp);
             }
+
         }catch(Exception error) {
-            toast(error.getMessage(), 1);
+            toast(error.getMessage(), 0);
         }
     }
+
 
     // api handling
     private void sendFiles(JSONArray data) {
@@ -222,13 +246,10 @@ public class Dashboard extends AppCompatActivity {
                     if(response.getString("status").equals("1")) {
                         toast(response.getString("msg"), 1);
                     }else{
-                        toast(response.toString(), 1);
-//                        loadList(response.getJSONArray("data"));
-//                        new FileHelper().writeFile(response.getJSONArray("data").getJSONObject(0));
-
+                        loadList(response.getJSONArray("data"));
                     }
                 }catch(Exception error) {
-                    toast(error.getMessage(), 1);
+                    toast(error.getMessage(), 0);
                 }
             }
 
