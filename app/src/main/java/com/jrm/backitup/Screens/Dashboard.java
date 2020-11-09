@@ -73,9 +73,7 @@ public class Dashboard extends AppCompatActivity {
             fileList.setLayoutManager(layoutMng);
             fileAdp = new FileListAdp(this);
 
-            BU user = new BU();
-            user.Code(currentUser.getString("code"));
-            loadStats(new JSONArray().put(user));
+            displayStats();
             callList();
         }catch(Exception error) {
             toast("Could not load page", 1);
@@ -145,6 +143,15 @@ public class Dashboard extends AppCompatActivity {
 
 
     // onclick
+    public void logout(View view) {
+        new AppPref().localData(getApplicationContext(), 'S', "isLoggedIn", "No");
+        redirect(Login.class);
+    }
+
+    public void reloadList(View view) {
+        displayStats();
+        callList();
+    }
     private void chooseFiles() {
             Intent file = new Intent(Intent.ACTION_GET_CONTENT);
             file.setType("*/*");
@@ -161,7 +168,18 @@ public class Dashboard extends AppCompatActivity {
         }
     }
 
-    public void selectFiles(View view) {
+    private void displayStats() {
+        try {
+            BU user = new BU();
+            user.Code(currentUser.getString("code"));
+            loadStats(new JSONArray().put(user));
+        }catch(Exception error) {
+            toast("Could not load stats", 0);
+        }
+    }
+
+
+        public void selectFiles(View view) {
         try {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             ViewGroup parent = findViewById(android.R.id.content);

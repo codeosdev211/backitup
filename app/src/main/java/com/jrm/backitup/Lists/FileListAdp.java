@@ -38,8 +38,9 @@ public class FileListAdp extends RecyclerView.Adapter<FileListHolder> {
     public void onBindViewHolder(FileListHolder holder, int position) {
         try {
         holder.fileName.setText(fileList.get(position).getString("name"));
-        holder.fileExt.setText(fileList.get(position).getString("extension"));
-        holder.fileSize.setText(fileList.get(position).getString("originalSize"));
+        holder.fileExt.setText(fileList.get(position).getString("extension").toUpperCase());
+        double size = (Double.parseDouble(fileList.get(position).getString("originalSize"))) / 1000.00;
+        holder.fileSize.setText(String.valueOf(size) + " KB");
         holder.fileCode.setText(fileList.get(position).getString("code"));
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
