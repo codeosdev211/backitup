@@ -39,36 +39,43 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Your Stats:"
-        android:textSize="14sp"
-        android:textColor="@color/appDark"
-        android:layout_marginTop="10dp"
-        android:paddingLeft="10dp"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dashTitleBar"
-        android:id="@+id/dashStatTitle" />
+        android:id="@+id/dashStatList">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_margin="10dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dashStatTitle"
-        android:id="@+id/dashStatList"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Total Files Uploaded: 0"
+            android:textSize="14sp"
+            android:textColor="@color/appDark"
+            android:id="@+id/dashTotalFiles"/>
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Your Total Groups: 0"
+            android:textSize="14sp"
+            android:textColor="@color/appDark"
+            android:id="@+id/dashTotalGroups"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Your Files"
+        android:layout_marginTop="10dp"
+        android:text="Your Files:"
         android:textSize="14sp"
         android:textColor="@color/appDark"
         android:paddingLeft="10dp"
-        android:layout_marginTop="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dashStatList"

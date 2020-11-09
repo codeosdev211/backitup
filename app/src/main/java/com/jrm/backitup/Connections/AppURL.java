@@ -13,6 +13,8 @@ public class AppURL {
                 return baseURL + "/files/add";
             case "listFile":
                 return baseURL + "/files/list";
+            case "listStats":
+                return baseURL + "/user/stats";
             default:
                 break;
         }

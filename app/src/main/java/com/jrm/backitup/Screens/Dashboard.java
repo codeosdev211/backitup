@@ -49,7 +49,7 @@ public class Dashboard extends AppCompatActivity {
     private final int fileCode = 211;
     FileHelper fileHelper;
 
-    TextView userName;
+    TextView userName, totalFiles, totalGroups;
 
     RecyclerView fileList;
     RecyclerView.LayoutManager layoutMng;
@@ -64,6 +64,8 @@ public class Dashboard extends AppCompatActivity {
             checkPermission();
 
             userName = (TextView) findViewById(R.id.dashUserName);
+            totalFiles = (TextView) findViewById(R.id.dashTotalFiles);
+            totalGroups = (TextView) findViewById(R.id.dashTotalGroups);
             fileList = (RecyclerView) findViewById(R.id.dashFilesList);
 
             userName.setText("Hey, " + currentUser.getString("firstName"));
@@ -71,6 +73,7 @@ public class Dashboard extends AppCompatActivity {
             fileList.setLayoutManager(layoutMng);
             fileAdp = new FileListAdp(this);
 
+            loadStats(new JSONArray().put(new BU().Code(currentUser.getString("code"))));
             callList();
         }catch(Exception error) {
             toast("Could not load page", 1);
@@ -260,7 +263,28 @@ public class Dashboard extends AppCompatActivity {
         });
     }
 
+    private void loadStats(JSONArray data) {
+        new API().callServer(getApplicationContext(), 1, "listStats", data, new IAPI() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                try {
+                    if(response.getString("status").equals("1")) {
+                        toast(response.getString("msg"), 1);
+                    }else{
+                        totalFiles.setText(response.getJSONArray("data").getJSONObject(0).getString("totalFiles"));
+                        totalGroups.setText(response.getJSONArray("data").getJSONObject(0).getString("totalGroups"));
+                    }
+                }catch(Exception error) {
+                    toast(error.getMessage(), 0);
+                }
+            }
 
+            @Override
+            public void onError(VolleyError error) {
+                toast(error.getMessage(), 1);
+            }
+        });
+    }
 
 
 
