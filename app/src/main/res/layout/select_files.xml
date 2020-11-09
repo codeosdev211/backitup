@@ -20,16 +20,6 @@
         android:layout_height="150dp"
         android:src="@drawable/upload_icon"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="No. of files selected: "
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:gravity="center"
-        android:padding="10dp"
-        android:layout_marginBottom="10dp"
-        android:id="@+id/selectedFileCount"/>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"

@@ -3,26 +3,55 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@drawable/recycler_item_layout"
+    android:orientation="horizontal"
+    android:background="@color/white"
     android:layout_margin="2dp"
-    android:padding="10dp"
     android:id="@+id/fileParent">
 
    <androidx.appcompat.widget.AppCompatTextView
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:text="File Name.ext"
-       android:textSize="14sp"
-       android:textColor="@color/black"
-       android:id="@+id/fileName" />
+       android:layout_width="45dp"
+       android:layout_height="45dp"
+       android:layout_margin="5dp"
+       android:text="EXT"
+       android:textColor="@color/white"
+       android:textSize="12sp"
+       android:gravity="center"
+       android:background="@drawable/text_ext_layout"
+       android:id="@+id/fileExt" />
 
-   <androidx.appcompat.widget.AppCompatTextView
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:visibility="gone"
-       android:id="@+id/fileCode" />
+   <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="8.5"
+      android:orientation="vertical">
 
+      <androidx.appcompat.widget.AppCompatTextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="5dp"
+          android:text="File Name.ext"
+          android:textSize="15sp"
+          android:textColor="@color/black"
+          android:paddingLeft="5dp"
+          android:id="@+id/fileName" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Size"
+          android:textSize="14sp"
+          android:textColor="@color/black"
+          android:layout_marginTop="5dp"
+          android:paddingLeft="5dp"
+          android:id="@+id/fileSize" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:visibility="gone"
+          android:id="@+id/fileCode" />
+
+   </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
 

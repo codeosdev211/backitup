@@ -73,7 +73,9 @@ public class Dashboard extends AppCompatActivity {
             fileList.setLayoutManager(layoutMng);
             fileAdp = new FileListAdp(this);
 
-            loadStats(new JSONArray().put(new BU().Code(currentUser.getString("code"))));
+            BU user = new BU();
+            user.Code(currentUser.getString("code"));
+            loadStats(new JSONArray().put(user));
             callList();
         }catch(Exception error) {
             toast("Could not load page", 1);
@@ -271,8 +273,8 @@ public class Dashboard extends AppCompatActivity {
                     if(response.getString("status").equals("1")) {
                         toast(response.getString("msg"), 1);
                     }else{
-                        totalFiles.setText(response.getJSONArray("data").getJSONObject(0).getString("totalFiles"));
-                        totalGroups.setText(response.getJSONArray("data").getJSONObject(0).getString("totalGroups"));
+                        totalFiles.setText("Total Files Uploaded: " + response.getJSONArray("data").getJSONObject(0).getString("totalFiles"));
+                        totalGroups.setText("Your Total Groups: " + response.getJSONArray("data").getJSONObject(0).getString("totalGroups"));
                     }
                 }catch(Exception error) {
                     toast(error.getMessage(), 0);

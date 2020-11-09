@@ -38,6 +38,8 @@ public class FileListAdp extends RecyclerView.Adapter<FileListHolder> {
     public void onBindViewHolder(FileListHolder holder, int position) {
         try {
         holder.fileName.setText(fileList.get(position).getString("name"));
+        holder.fileExt.setText(fileList.get(position).getString("extension"));
+        holder.fileSize.setText(fileList.get(position).getString("originalSize"));
         holder.fileCode.setText(fileList.get(position).getString("code"));
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,14 +67,15 @@ public class FileListAdp extends RecyclerView.Adapter<FileListHolder> {
 }
 class FileListHolder extends RecyclerView.ViewHolder {
 
-    public TextView fileName, fileCode;
+    public TextView fileName, fileCode, fileExt, fileSize;
     public LinearLayoutCompat parent;
 
     public FileListHolder(View layout) {
         super(layout);
-
         parent = (LinearLayoutCompat) layout.findViewById(R.id.fileParent);
         fileName = (TextView) layout.findViewById(R.id.fileName);
         fileCode = (TextView) layout.findViewById(R.id.fileCode);
+        fileExt = (TextView) layout.findViewById(R.id.fileExt);
+        fileSize = (TextView) layout.findViewById(R.id.fileSize);
     }
 }

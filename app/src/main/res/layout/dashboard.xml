@@ -20,7 +20,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="8.5"
+            android:layout_weight="7"
             android:text="Hey, User"
             android:textSize="22sp"
             android:textColor="@color/black"
@@ -29,6 +29,13 @@
             android:gravity="bottom"
             android:id="@+id/dashUserName" />
 
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:src="@drawable/logout"
+            android:background="@color/appBg"
+            android:paddingTop="10dp" />
         <androidx.appcompat.widget.AppCompatImageButton
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -54,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="Total Files Uploaded: 0"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textColor="@color/appDark"
             android:id="@+id/dashTotalFiles"/>
 
@@ -63,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="Your Total Groups: 0"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textColor="@color/appDark"
             android:id="@+id/dashTotalGroups"/>
 
@@ -73,7 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Your Files:"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:textColor="@color/appDark"
         android:paddingLeft="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
