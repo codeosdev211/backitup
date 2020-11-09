@@ -27,13 +27,15 @@ public class FileHelper {
     private ArrayList<BF> fileList;
     private ArrayList<String> dataList;
     private int fileCount;
+    private String ownerCode;
 
 
-    public FileHelper(Context context) {
+    public FileHelper(Context context, String ownerCode) {
         this.context = context;
         this.fileList = new ArrayList<>();
         this.dataList = new ArrayList<>();
         this.fileCount = 0;
+        this.ownerCode = ownerCode;
     }
 
     public int getSize() {
@@ -47,6 +49,7 @@ public class FileHelper {
             file.Name(fileName);
             file.OriginalSize(getAttribute(eachFile, OpenableColumns.SIZE));
             file.Extension(FilenameUtils.getExtension(fileName));
+            file.OwnerCode(this.ownerCode);
             fileList.add(file);
             InputStream stream = context.getApplicationContext().getContentResolver().openInputStream(eachFile);
             dataList.add(Base64.encodeToString(IOUtils.toByteArray(stream), 0));

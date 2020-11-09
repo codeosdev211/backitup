@@ -101,7 +101,7 @@ public class Dashboard extends AppCompatActivity {
     public void onActivityResult(int fileCode, int resultCode, Intent data) {
         super.onActivityResult(fileCode, resultCode, data);
         try {
-            fileHelper = new FileHelper(getApplicationContext());
+            fileHelper = new FileHelper(getApplicationContext(), currentUser.getString("code"));
             if (fileCode == this.fileCode && resultCode == -1) {
                 // if multiple select then into if else single selection
                 if(data.getClipData() != null) {
@@ -222,6 +222,7 @@ public class Dashboard extends AppCompatActivity {
                     if(response.getString("status").equals("1")) {
                         toast(response.getString("msg"), 1);
                     }else{
+                        toast(response.toString(), 1);
 //                        loadList(response.getJSONArray("data"));
 //                        new FileHelper().writeFile(response.getJSONArray("data").getJSONObject(0));
 
