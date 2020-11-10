@@ -138,8 +138,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_marginLeft="3dp"
-        android:layout_marginRight="3dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
         android:elevation="10dp"
         android:visibility="gone"
         android:background="@drawable/bottom_slider_layout"
@@ -188,6 +188,7 @@
             android:layout_height="40dp"
             android:text="File Name"
             android:textSize="16sp"
+            android:textStyle="bold"
             android:gravity="center_vertical"
             android:textColor="@color/black"
             android:padding="5dp"

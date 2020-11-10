@@ -46,7 +46,7 @@ public class FileListAdp extends RecyclerView.Adapter<FileListHolder> {
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((Dashboard)context.getApplicationContext()).onListItemClick(fileList.get(position));
+                ((Dashboard)context).onListItemClick(fileList.get(position));
             }
         });
         }catch(Exception error) {

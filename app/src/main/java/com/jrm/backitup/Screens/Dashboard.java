@@ -251,7 +251,7 @@ public class Dashboard extends AppCompatActivity {
         try {
             fileName.setText(file.getString("name"));
             double size = (Double.parseDouble(file.getString("originalSize"))) / 1000.00;
-            fileSize.setText("Size: " + String.valueOf(size));
+            fileSize.setText("Size: " + String.valueOf(size) + " KB");
             selectedFile = file.getString("code");
             openDetails();
         }catch(Exception error) {

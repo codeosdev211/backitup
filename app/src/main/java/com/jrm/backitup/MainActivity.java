@@ -16,34 +16,16 @@ import com.jrm.backitup.Screens.Login;
 
 public class MainActivity extends AppCompatActivity {
 
-    LinearLayoutCompat hiddenPanel;
-    boolean isOpen = false;
-    Animation bottomDown, bottomUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        if(new AppPref().localData(getApplicationContext(), 'G', "isLoggedIn", "").equals("Yes")) {
-//            redirect(Dashboard.class);
-//        }else{
-//            redirect(Login.class);
-//        }
-        hiddenPanel = findViewById(R.id.hiddenPanel);
-        bottomDown = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.bottom_down);
-        bottomUp = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.bottom_up);
-    }
-
-    public void animate(View view) {
-        if(isOpen) {
-            hiddenPanel.startAnimation(bottomDown);
-            hiddenPanel.setVisibility(View.GONE);
-            isOpen = false;
+        if(new AppPref().localData(getApplicationContext(), 'G', "isLoggedIn", "").equals("Yes")) {
+            redirect(Dashboard.class);
         }else{
-            hiddenPanel.startAnimation(bottomUp);
-            hiddenPanel.setVisibility(View.VISIBLE);
-            isOpen = true;
+            redirect(Login.class);
         }
     }
 
