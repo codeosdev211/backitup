@@ -146,7 +146,7 @@ public class Dashboard extends AppCompatActivity {
                 }else{
                     fileHelper.appendFile(data.getData());
                 }
-                toast("Files Selected", 1);
+                toast("Files Selected", 0);
             }
         }catch(Exception error) {
             toast(error.getMessage(), 1);
@@ -190,6 +190,17 @@ public class Dashboard extends AppCompatActivity {
             toast("No files selected", 1);
         }else{
             sendFiles(new JSONArray().put(fileHelper.getList()));
+        }
+    }
+
+    public void downloadFile(View view) {
+        try {
+            BF reqFile = new BF();
+            reqFile.OwnerCode(currentUser.getString("code"));
+            reqFile.Code(selectedFile);
+            requestDownload(new JSONArray().put(reqFile));
+        }catch(Exception error) {
+            toast("Could not request download", 0);
         }
     }
 
@@ -260,6 +271,29 @@ public class Dashboard extends AppCompatActivity {
     }
 
     // api handling
+    private void requestDownload(JSONArray data) {
+        new API().callServer(getApplicationContext(), 1, "downloadFile", data, new IAPI() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                try {
+                    if(response.getString("status").equals("1")) {
+                        toast(response.getString("msg"), 1);
+                    }else{
+                        FileHelper helper = new FileHelper(getApplicationContext(), currentUser.getString("code"));
+                        helper.writeFile(response.getJSONArray("data").getJSONObject(0));
+                        toast("File Downloaded", 0);
+                    }
+                }catch(Exception error) {
+                    toast(error.getMessage(), 1);
+                }
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                toast(error.getMessage(), 1);
+            }
+        });
+    }
     private void sendFiles(JSONArray data) {
         new API().callServer(getApplicationContext(), 1, "sendFile", data, new IAPI() {
             @Override
