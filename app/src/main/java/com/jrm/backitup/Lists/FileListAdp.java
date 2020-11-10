@@ -12,6 +12,7 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jrm.backitup.R;
+import com.jrm.backitup.Screens.Dashboard;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -45,7 +46,7 @@ public class FileListAdp extends RecyclerView.Adapter<FileListHolder> {
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ((Dashboard)context.getApplicationContext()).onListItemClick(fileList.get(position));
             }
         });
         }catch(Exception error) {

@@ -2,6 +2,7 @@ package com.jrm.backitup.Screens;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +18,8 @@ import android.provider.OpenableColumns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,11 +52,15 @@ public class Dashboard extends AppCompatActivity {
     private final int fileCode = 211;
     FileHelper fileHelper;
 
-    TextView userName, totalFiles, totalGroups;
+    TextView userName, totalFiles, totalGroups, fileName, fileSize;
+    String selectedFile = "";
 
     RecyclerView fileList;
     RecyclerView.LayoutManager layoutMng;
     FileListAdp fileAdp;
+
+    ConstraintLayout detailPanel;
+    Animation openPanel, closePanel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +73,13 @@ public class Dashboard extends AppCompatActivity {
             userName = (TextView) findViewById(R.id.dashUserName);
             totalFiles = (TextView) findViewById(R.id.dashTotalFiles);
             totalGroups = (TextView) findViewById(R.id.dashTotalGroups);
+            fileName = (TextView) findViewById(R.id.dashDetailsName);
+            fileSize = (TextView) findViewById(R.id.dashDetailsSize);
             fileList = (RecyclerView) findViewById(R.id.dashFilesList);
+            detailPanel = (ConstraintLayout) findViewById(R.id.dashfileDetails);
+
+            openPanel = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.bottom_up);
+            closePanel = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.bottom_down);
 
             userName.setText("Hey, " + currentUser.getString("firstName"));
             layoutMng = new LinearLayoutManager(this);
@@ -152,6 +165,18 @@ public class Dashboard extends AppCompatActivity {
         displayStats();
         callList();
     }
+
+    private void openDetails() {
+        detailPanel.startAnimation(openPanel);
+        detailPanel.setVisibility(View.VISIBLE);
+    }
+
+    public void closeDetails(View view) {
+        detailPanel.startAnimation(closePanel);
+        detailPanel.setVisibility(View.GONE);
+    }
+
+
     private void chooseFiles() {
             Intent file = new Intent(Intent.ACTION_GET_CONTENT);
             file.setType("*/*");
@@ -179,7 +204,7 @@ public class Dashboard extends AppCompatActivity {
     }
 
 
-        public void selectFiles(View view) {
+    public void selectFiles(View view) {
         try {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             ViewGroup parent = findViewById(android.R.id.content);
@@ -222,21 +247,17 @@ public class Dashboard extends AppCompatActivity {
         }
     }
 
-    private void loadList(JSONArray files) {
+    public void onListItemClick(JSONObject file) {
         try {
-            if(files.length() == 0 || files == null) {
-                toast("No Files Found!", 1);
-            }else{
-                fileList.removeAllViews();
-                fileAdp.add(files);
-                fileList.setAdapter(fileAdp);
-            }
-
+            fileName.setText(file.getString("name"));
+            double size = (Double.parseDouble(file.getString("originalSize"))) / 1000.00;
+            fileSize.setText("Size: " + String.valueOf(size));
+            selectedFile = file.getString("code");
+            openDetails();
         }catch(Exception error) {
-            toast(error.getMessage(), 0);
+            toast("Could not perform list item click", 0);
         }
     }
-
 
     // api handling
     private void sendFiles(JSONArray data) {
@@ -269,7 +290,15 @@ public class Dashboard extends AppCompatActivity {
                     if(response.getString("status").equals("1")) {
                         toast(response.getString("msg"), 1);
                     }else{
-                        loadList(response.getJSONArray("data"));
+                        JSONArray files = response.getJSONArray("data");
+                        if(files.length() == 0 || files == null) {
+                            toast("No Files Found!", 1);
+                        }else{
+                            fileList.removeAllViews();
+                            fileAdp.add(files);
+                            fileList.setAdapter(fileAdp);
+                        }
+
                     }
                 }catch(Exception error) {
                     toast(error.getMessage(), 0);
