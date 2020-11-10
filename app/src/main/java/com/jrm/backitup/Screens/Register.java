@@ -17,11 +17,19 @@ import com.jrm.backitup.R;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/*
+ *  @Author Jayesh (codeos)
+ * I hate comments but this is for you to understand my strange code.
+ * My function names will mostly explain the code.
+ */
+
 public class Register extends AppCompatActivity {
 
     EditText regFirstName, regLastName, regEmail, regPassword;
-    String errMsg = "";
     private final static String regexEmail = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+
+    // this string below is the error message we will prepare when validating stuff.
+    String errMsg = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +85,7 @@ public class Register extends AppCompatActivity {
             if(errMsg.length() != 0) {
                 toast(errMsg, 1);
             }else{
+                /* creating User object, BU? i name tables that way */
                 BU user = new BU();
                 user.FirstName(regFirstName.getText().toString().trim());
                 user.LastName(regLastName.getText().toString().trim());

@@ -19,7 +19,34 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
+ *  @Author Jayesh (codeos)
+ * I hate comments but this is for you to understand my strange code.
+ * My function names will mostly explain the code.
+ */
 public class API {
+
+    /*
+    * The HTTP requests take place HERE.
+    * why int for method where you expect Request.Method.POST OR
+    * Request.Method.GET, etc?
+    * its base type is int. keeps it clean.
+    *
+    * seen the new API().callServer(....) calls right?
+    * with the interface IAPI we dont need to write this whole function coded below everytime.
+    * The library used is Volley, i know "Have you tried RetroFit?" or something that sounds similar idk.?!
+    * I haven't , I will maybe.
+    *
+    *
+    * anyway,
+    * the final JSON request body will be like
+    * {
+    *   "values": [
+    *              .........
+    *              .........
+    *             ]
+    * }
+    */
 
     public void callServer(Context context, int method,
                            String urlType, JSONArray requestData,

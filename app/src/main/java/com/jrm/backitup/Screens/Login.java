@@ -21,11 +21,20 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
+ *  @Author Jayesh (codeos)
+ * I hate comments but this is for you to understand my strange code.
+ * My function names will mostly explain the code.
+ */
+
 public class Login extends AppCompatActivity {
 
     private EditText loginEmail, loginPassword;
-    private String errMsg = "";
     private final static String regexEmail = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+
+    // this string below is the error message we will prepare when validating stuff.
+    private String errMsg = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +42,6 @@ public class Login extends AppCompatActivity {
         try {
             loginEmail = (EditText) findViewById(R.id.loginEmail);
             loginPassword = (EditText) findViewById(R.id.loginPassword);
-
 
         }catch(Exception error) {
             toast("Could not load page", 0);
@@ -99,10 +107,11 @@ public class Login extends AppCompatActivity {
                     if(response.getString("status").equals("1")) {
                         toast(response.getString("msg"), 1);
                     }else{
+                        /* creating/ updating shared preference for the user's information and the app loggedin status */
+                        toast("Logging In...", 0);
                         AppPref localPref = new AppPref();
                         localPref.localData(getApplicationContext(), 'S', "BU", response.getJSONArray("data").getJSONObject(0).toString());
                         localPref.localData(getApplicationContext(), 'S', "isLoggedIn", "Yes");
-                        toast("Logging In...", 0);
                         redirect(Dashboard.class);
                     }
                 }catch(Exception error) {

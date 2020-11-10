@@ -14,6 +14,12 @@ import com.jrm.backitup.Local.AppPref;
 import com.jrm.backitup.Screens.Dashboard;
 import com.jrm.backitup.Screens.Login;
 
+/*
+*  @Author Jayesh (codeos)
+* I hate comments but this is for you to understand my strange code.
+* My function names will mostly explain the code.
+*/
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -22,6 +28,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*
+        * The app creates/updates a shared preference when signing in to the account by the name "isLoggedIn".
+        * This is a simple way to check if the user is signedin/ loggedin and redirect based on the value
+        * "Yes" - redirects to Dashboard activity and
+        * "No" - redirects to Login activity
+        */
         if(new AppPref().localData(getApplicationContext(), 'G', "isLoggedIn", "").equals("Yes")) {
             redirect(Dashboard.class);
         }else{

@@ -45,20 +45,32 @@ import java.io.FileOutputStream;
 import java.util.zip.Deflater;
 
 
+/*
+ *  @Author Jayesh (codeos)
+ * I hate comments but this is for you to understand my strange code.
+ * My function names will mostly explain the code.
+ */
+
 public class Dashboard extends AppCompatActivity {
 
+    // currentUser will hold the values we stored in shared preference while signing in
     JSONObject currentUser = null;
+    // CODES for permission, verification, etc.
     private final int requestCode = 911;
     private final int fileCode = 211;
+    // This FileHelper class helps in converting files to byte array and vice versa
     FileHelper fileHelper;
 
     TextView userName, totalFiles, totalGroups, fileName, fileSize;
+    // This will hold the unique value for the selected file
     String selectedFile = "";
 
+    // recyclerview for displaying file names
     RecyclerView fileList;
     RecyclerView.LayoutManager layoutMng;
     FileListAdp fileAdp;
 
+    // Layout that contains selected file details
     ConstraintLayout detailPanel;
     Animation openPanel, closePanel;
 
@@ -78,14 +90,17 @@ public class Dashboard extends AppCompatActivity {
             fileList = (RecyclerView) findViewById(R.id.dashFilesList);
             detailPanel = (ConstraintLayout) findViewById(R.id.dashfileDetails);
 
+            // loading animations
             openPanel = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.bottom_up);
             closePanel = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.bottom_down);
 
+            // loading  adapter for recycler view
             userName.setText("Hey, " + currentUser.getString("firstName"));
             layoutMng = new LinearLayoutManager(this);
             fileList.setLayoutManager(layoutMng);
             fileAdp = new FileListAdp(this);
 
+            // api calls
             displayStats();
             callList();
         }catch(Exception error) {
@@ -136,6 +151,9 @@ public class Dashboard extends AppCompatActivity {
     public void onActivityResult(int fileCode, int resultCode, Intent data) {
         super.onActivityResult(fileCode, resultCode, data);
         try {
+            /* now the question why?what?, the file helper i mentioned above will
+            * will handle the uri data we provide to it and convert it to our preferable whatever
+            */
             fileHelper = new FileHelper(getApplicationContext(), currentUser.getString("code"));
             if (fileCode == this.fileCode && resultCode == -1) {
                 // if multiple select then into if else single selection
@@ -161,11 +179,13 @@ public class Dashboard extends AppCompatActivity {
         redirect(Login.class);
     }
 
+    // the sync button
     public void reloadList(View view) {
         displayStats();
         callList();
     }
 
+    // these two down here for animation
     private void openDetails() {
         detailPanel.startAnimation(openPanel);
         detailPanel.setVisibility(View.VISIBLE);
@@ -175,7 +195,6 @@ public class Dashboard extends AppCompatActivity {
         detailPanel.startAnimation(closePanel);
         detailPanel.setVisibility(View.GONE);
     }
-
 
     private void chooseFiles() {
             Intent file = new Intent(Intent.ACTION_GET_CONTENT);
@@ -214,7 +233,9 @@ public class Dashboard extends AppCompatActivity {
         }
     }
 
-
+    /* this will display a dialog box where you choose/selects/pick files and upload
+        with the provided buttons
+     */
     public void selectFiles(View view) {
         try {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -246,6 +267,7 @@ public class Dashboard extends AppCompatActivity {
     }
 
     // list handling
+    // this one will prepare request and send to the server
     private void callList() {
         try {
             JSONArray request = new JSONArray();
@@ -258,6 +280,10 @@ public class Dashboard extends AppCompatActivity {
         }
     }
 
+    /* the clicks on the list we load will be handled by the following function to load
+        the data to file details layout
+        and animate it up on the screen. TADA?!?! right?
+    */
     public void onListItemClick(JSONObject file) {
         try {
             fileName.setText(file.getString("name"));
@@ -271,6 +297,9 @@ public class Dashboard extends AppCompatActivity {
     }
 
     // api handling
+    /*
+    * I know a lot of request to the server, its for clg no big deal.
+    */
     private void requestDownload(JSONArray data) {
         new API().callServer(getApplicationContext(), 1, "downloadFile", data, new IAPI() {
             @Override
@@ -324,6 +353,9 @@ public class Dashboard extends AppCompatActivity {
                     if(response.getString("status").equals("1")) {
                         toast(response.getString("msg"), 1);
                     }else{
+                        /* checking the len(data) and loading the adapter,recyclerview
+                            in the else block
+                         */
                         JSONArray files = response.getJSONArray("data");
                         if(files.length() == 0 || files == null) {
                             toast("No Files Found!", 1);
@@ -368,8 +400,4 @@ public class Dashboard extends AppCompatActivity {
             }
         });
     }
-
-
-
-
 }

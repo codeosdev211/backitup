@@ -19,8 +19,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+/*
+ *  @Author Jayesh (codeos)
+ * I hate comments but this is for you to understand my strange code.
+ * My function names will mostly explain the code.
+ */
 public class FileListAdp extends RecyclerView.Adapter<FileListHolder> {
     Context context;
+    // this is basically the half BF class in JSONObject form
     ArrayList<JSONObject> fileList;
 
     public FileListAdp(Context context) {
@@ -46,6 +52,9 @@ public class FileListAdp extends RecyclerView.Adapter<FileListHolder> {
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
+                * the function handles onClick on dash because we load the detail layout there.
+                * */
                 ((Dashboard)context).onListItemClick(fileList.get(position));
             }
         });
@@ -57,6 +66,7 @@ public class FileListAdp extends RecyclerView.Adapter<FileListHolder> {
     @Override
     public int getItemCount() { return fileList.size(); }
 
+    // to add data to adapter from whatever activity that called the adapter
     public void add(JSONArray data) throws Exception {
         fileList.clear();
         for(int each = 0; each < data.length(); each++) {
@@ -67,8 +77,10 @@ public class FileListAdp extends RecyclerView.Adapter<FileListHolder> {
 
 
 }
+
 class FileListHolder extends RecyclerView.ViewHolder {
 
+    // elements that are in files_list.xml
     public TextView fileName, fileCode, fileExt, fileSize;
     public LinearLayoutCompat parent;
 

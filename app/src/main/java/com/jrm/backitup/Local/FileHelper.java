@@ -21,8 +21,32 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+/*
+ *  @Author Jayesh (codeos)
+ * I hate comments but this is for you to understand my strange code.
+ * My function names will mostly explain the code.
+ */
 public class FileHelper {
 
+    /*
+    * hear me out!
+    * this class is the base for this applcation. Just DOWNLOAD the file or UPLOAD it.
+    * the data is sent to server in the following format
+    * {
+    *   "fileInfos" : [
+    *                   {...}, {...},
+    *                   { the BF class }
+    *                 ],
+    *   "fileData" : [
+    *                   "filedata1 in byte array format converted to string",
+    *                   "sdfasdfjksl;fkjsal;jdf",
+    *                   "dklajshfjkshfgklshgkjshg"
+    *                 ]
+    * }
+    * here the fileList is FileInfos and dataList is fileData,
+    * i dont store file in database, WHY? its slow.
+    *
+    */
     private Context context;
     private ArrayList<BF> fileList;
     private ArrayList<String> dataList;
@@ -44,6 +68,9 @@ public class FileHelper {
 
     public void appendFile(Uri eachFile) {
         try {
+            /* loading BF object and data string from Uri
+            * apache common utils, codec etc used to convert
+            */
             BF file = new BF();
             String fileName = getAttribute(eachFile, OpenableColumns.DISPLAY_NAME);
             file.Name(fileName);
@@ -59,6 +86,7 @@ public class FileHelper {
         }
     }
 
+    /* this returns the json format discussed above in object form */
     public FileInfo getList() {
         FileInfo data = new FileInfo();
         data.FileInfos(fileList);
@@ -71,6 +99,10 @@ public class FileHelper {
         IOUtils.write(Base64.decode(fileData.get("fileData").toString().getBytes(), 0), new FileOutputStream(destination));
     }
 
+    /* DISPLAY_NAME for file name and SIZE for size ,
+        just pass OpenableColumns.DISPLAY_NAME or OpenableColumns.SIZE
+        to the function
+     */
     private String getAttribute(Uri data, String attribute) {
         Cursor cursor = context.getContentResolver().query(data, null, null, null, null);
         if(cursor.getCount() <= 0) {
