@@ -167,6 +167,7 @@
             android:src="@drawable/download"
             app:layout_constraintRight_toLeftOf="@id/dashDetailsClose"
             app:layout_constraintTop_toTopOf="parent"
+            android:onClick="downloadFile"
             android:id="@+id/dashDetailsDownload"/>
 
         <androidx.appcompat.widget.AppCompatTextView

@@ -280,7 +280,7 @@ public class Dashboard extends AppCompatActivity {
                         toast(response.getString("msg"), 1);
                     }else{
                         FileHelper helper = new FileHelper(getApplicationContext(), currentUser.getString("code"));
-                        helper.writeFile(response.getJSONArray("data").getJSONObject(0));
+                        helper.writeFile(response);
                         toast("File Downloaded", 0);
                     }
                 }catch(Exception error) {
