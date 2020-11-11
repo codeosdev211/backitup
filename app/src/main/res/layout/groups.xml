@@ -4,6 +4,106 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Screens.Groups">
+    tools:context=".Screens.Groups"
+    android:background="@color/white">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:weigthSum="10"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/grpTitlebar">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:layout_width="0dp"
+            android:layout_weight="1.4"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:src="@drawable/back"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_weight="7.3"
+            android:layout_height="match_parent"
+            android:text="Your Groups"
+            android:textSize="22sp"
+            android:textColor="@color/black"
+            android:gravity="center_vertical"/>
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:layout_width="0dp"
+            android:layout_weight="1.2"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:layout_gravity="end"
+            android:onClick="openSearch"
+            android:src="@drawable/search"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:elevation="12dp"
+        android:background="@drawable/searchpanel_layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
+        android:id="@+id/grpSearchPanel">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:orientation="horizontal"
+            android:layout_margin="10dp"
+            android:weightSum="10"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/grpSearchBar">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:layout_width="0dp"
+                android:layout_weight="8"
+                android:layout_height="match_parent"
+                android:hint="Search Group..."
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey"
+                android:drawableLeft="@drawable/search"
+                android:paddingLeft="10dp"
+                android:layout_margin="2dp"
+                android:background="@drawable/search_layout"
+                android:id="@+id/grpSearchBox"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="match_parent"
+                android:text="Cancel"
+                android:textSize="18sp"
+                android:letterSpacing="0.041"
+                android:paddingBottom="3dp"
+                android:textColor="@color/appDark"
+                android:gravity="center"
+                android:onClick="closeSearch"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/grpSearchBar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/grpSearchList"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
