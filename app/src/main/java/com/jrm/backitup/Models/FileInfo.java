@@ -16,7 +16,7 @@ public class FileInfo {
      * so this way is okay? idk
      * In words,
      *  if the value is null for string and -1 for interger/double/float it GETS the value
-     *  else it SETS the value and instantly GETS to cuz a = b = 4; at end a and b are 4
+     *  else it SETS the value and instantly GETS too cuz a = b = 4; at end a and b are 4
      */
     public ArrayList<BF> FileInfos(ArrayList<BF> value) {
         return (value == null) ? fileInfos : (fileInfos = value);

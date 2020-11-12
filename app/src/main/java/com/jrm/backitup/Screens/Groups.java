@@ -2,6 +2,8 @@ package com.jrm.backitup.Screens;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
+import com.jrm.backitup.Lists.GroupListAdp;
 import com.jrm.backitup.Local.AppPref;
 import com.jrm.backitup.R;
 
@@ -28,6 +31,12 @@ public class Groups extends AppCompatActivity {
     // layout that contains the search stuff
     ConstraintLayout searchPanel;
 
+    // recyclerview for the user's groups
+    RecyclerView groupList;
+    RecyclerView.LayoutManager layoutMng;
+    GroupListAdp groupAdp;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +45,11 @@ public class Groups extends AppCompatActivity {
             currentUser = new JSONObject(new AppPref().localData(getApplicationContext(), 'G', "BU", ""));
 
             searchPanel = (ConstraintLayout) findViewById(R.id.grpSearchPanel);
+            groupList = (RecyclerView) findViewById(R.id.grpList);
+
+            //load list related stuff
+            layoutMng = new LinearLayoutManager(this);
+
 
 
         }catch(Exception error) {
