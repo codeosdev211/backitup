@@ -48,7 +48,6 @@ public class FileListAdp extends RecyclerView.Adapter<FileListHolder> {
         holder.fileExt.setText(fileList.get(position).getString("extension").toUpperCase());
         double size = (Double.parseDouble(fileList.get(position).getString("originalSize"))) / 1000.00;
         holder.fileSize.setText(String.valueOf(size) + " KB");
-        holder.fileCode.setText(fileList.get(position).getString("code"));
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,14 +80,13 @@ public class FileListAdp extends RecyclerView.Adapter<FileListHolder> {
 class FileListHolder extends RecyclerView.ViewHolder {
 
     // elements that are in files_list.xml
-    public TextView fileName, fileCode, fileExt, fileSize;
+    public TextView fileName, fileExt, fileSize;
     public LinearLayoutCompat parent;
 
     public FileListHolder(View layout) {
         super(layout);
         parent = (LinearLayoutCompat) layout.findViewById(R.id.fileParent);
         fileName = (TextView) layout.findViewById(R.id.fileName);
-        fileCode = (TextView) layout.findViewById(R.id.fileCode);
         fileExt = (TextView) layout.findViewById(R.id.fileExt);
         fileSize = (TextView) layout.findViewById(R.id.fileSize);
     }

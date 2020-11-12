@@ -41,6 +41,9 @@ public class GroupListAdp extends RecyclerView.Adapter<GroupListHolder> {
     @Override
     public void onBindViewHolder(GroupListHolder holder, int position) {
         try {
+            holder.grpName.setText(grpList.get(position).getString("name"));
+            holder.grpOwner.setText(grpList.get(position).getString("ownerName"));
+            holder.grpUserCount.setText(grpList.get(position).getString("userCount"));
 
         }catch(Exception error) {
             Toast.makeText(context.getApplicationContext(), "Could not load grp name", Toast.LENGTH_SHORT).show();
@@ -63,10 +66,13 @@ public class GroupListAdp extends RecyclerView.Adapter<GroupListHolder> {
 class GroupListHolder extends RecyclerView.ViewHolder {
 
     //elements that are in grp_list
-    TextView grpCode, grpName, grpUserCount;
+    TextView grpName, grpOwner, grpUserCount;
 
     public GroupListHolder(View layout) {
         super(layout);
+        grpName = (TextView) layout.findViewById(R.id.grpName);
+        grpOwner = (TextView) layout.findViewById(R.id.grpOwner);
+        grpUserCount = (TextView) layout.findViewById(R.id.grpUserCount);
     }
 }
 
