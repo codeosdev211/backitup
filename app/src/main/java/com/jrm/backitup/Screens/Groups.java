@@ -74,24 +74,25 @@ public class Groups extends AppCompatActivity {
             BU user = new BU();
             user.Code(currentUser.getString("code"));
             loadGroupsToDb(new JSONArray().put(user));
-            query.readGroups("");
+            refreshList();
 
             /* search on text change by calling local database not the server. */
             searchBox.addTextChangedListener(new TextWatcher() {
                 @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {  }
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                    try {
+                        searchAdp.add(query.readGroups(s.toString()));
+                        searchList.setAdapter(searchAdp);
+                    }catch(Exception error) {
+                        toast(error.getMessage(), 0);
+                    }
                 }
 
                 @Override
-                public void afterTextChanged(Editable s) {
-
-                }
+                public void afterTextChanged(Editable s) {  }
             });
 
         }catch(Exception error) {
@@ -119,9 +120,17 @@ public class Groups extends AppCompatActivity {
     }
 
     // list handling
+    private void refreshList() {
+        try {
+            groupAdp.add(query.readGroups(""));
+            groupList.setAdapter(groupAdp);
+        }catch(Exception error) {
+            toast("Could not load list", 0);
+        }
+    }
 
 
-    // api handling
+        // api handling
     private void loadGroupsToDb(JSONArray data) {
         new API().callServer(getApplicationContext(), 1, "listGroups", data, new IAPI() {
 
