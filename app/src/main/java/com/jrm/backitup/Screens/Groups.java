@@ -7,9 +7,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
@@ -17,6 +20,7 @@ import com.jrm.backitup.Connections.API;
 import com.jrm.backitup.Connections.IAPI;
 import com.jrm.backitup.Lists.GroupListAdp;
 import com.jrm.backitup.Local.AppPref;
+import com.jrm.backitup.Local.Query;
 import com.jrm.backitup.Models.BG;
 import com.jrm.backitup.Models.BU;
 import com.jrm.backitup.R;
@@ -31,6 +35,8 @@ import org.json.JSONObject;
  */
 public class Groups extends AppCompatActivity {
 
+    EditText searchBox;
+
     // currentUser will hold the values we stored in shared preference while signing in
     JSONObject currentUser = null;
 
@@ -42,6 +48,8 @@ public class Groups extends AppCompatActivity {
     RecyclerView.LayoutManager layoutMng;
     GroupListAdp groupAdp, searchAdp;
 
+    // database query handler
+    Query query;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +57,9 @@ public class Groups extends AppCompatActivity {
         setContentView(R.layout.groups);
         try {
             currentUser = new JSONObject(new AppPref().localData(getApplicationContext(), 'G', "BU", ""));
+            query = new Query(getApplicationContext());
 
+            searchBox = (EditText) findViewById(R.id.grpSearchBox);
             searchPanel = (ConstraintLayout) findViewById(R.id.grpSearchPanel);
             groupList = (RecyclerView) findViewById(R.id.grpList);
             searchList = (RecyclerView) findViewById(R.id.grpSearchList);
@@ -64,6 +74,26 @@ public class Groups extends AppCompatActivity {
             BU user = new BU();
             user.Code(currentUser.getString("code"));
             loadGroupsToDb(new JSONArray().put(user));
+            query.readGroups("");
+
+            /* search on text change by calling local database not the server. */
+            searchBox.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+
         }catch(Exception error) {
             toast("Could not load page", 1);
         }
@@ -79,9 +109,7 @@ public class Groups extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), message, duration).show();
     }
 
-
     // onclick
-
     public void openSearch(View view) {
          searchPanel.setVisibility(View.VISIBLE);
     }
@@ -104,6 +132,10 @@ public class Groups extends AppCompatActivity {
                         toast(response.getString("msg"), 1);
                     }else{
                         // load to database
+                        JSONArray groups = response.getJSONArray("data");
+                        for(int grp = 0; grp < groups.length(); grp++) {
+                           query.writeGroup(groups.getJSONObject(grp));
+                        }
                     }
                 }catch(Exception error) {
                     toast(error.getMessage(), 0);
