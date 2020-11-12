@@ -16,7 +16,7 @@ public class AppPref {
         like json string for the user info
         and isLoggedIn thing
         S for Set
-        G for Get, if your where like WHAT IS THIS TRASH!?
+        G for Get, if you where like WHAT IS THIS TRASH!?
      */
     public String localData(Context context,char type, String localKey, String localData) {
         SharedPreferences preference = context.getSharedPreferences("AppData", Context.MODE_PRIVATE);

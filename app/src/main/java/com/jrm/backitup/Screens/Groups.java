@@ -27,7 +27,6 @@ public class Groups extends AppCompatActivity {
 
     // layout that contains the search stuff
     ConstraintLayout searchPanel;
-    Animation openPanel, closePanel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +36,6 @@ public class Groups extends AppCompatActivity {
             currentUser = new JSONObject(new AppPref().localData(getApplicationContext(), 'G', "BU", ""));
 
             searchPanel = (ConstraintLayout) findViewById(R.id.grpSearchPanel);
-
-            // loading animations
-            openPanel = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.top_down);
-            closePanel = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.top_up);
-
 
 
         }catch(Exception error) {
@@ -62,12 +56,10 @@ public class Groups extends AppCompatActivity {
     // onclick
 
     public void openSearch(View view) {
-         searchPanel.startAnimation(openPanel);
          searchPanel.setVisibility(View.VISIBLE);
     }
 
     public void closeSearch(View view) {
-        searchPanel.startAnimation(closePanel);
         searchPanel.setVisibility(View.GONE);
     }
 

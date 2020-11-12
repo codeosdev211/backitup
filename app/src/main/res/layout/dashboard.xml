@@ -43,7 +43,8 @@
             android:layout_weight="1.5"
             android:src="@drawable/groups"
             android:background="@color/white"
-            android:paddingTop="10dp" />
+            android:paddingTop="10dp"
+            android:onClick="redirectToGroups"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

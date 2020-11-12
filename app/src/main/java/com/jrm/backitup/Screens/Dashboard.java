@@ -185,6 +185,10 @@ public class Dashboard extends AppCompatActivity {
         callList();
     }
 
+    public void redirectToGroups(View view) {
+        redirect(Groups.class);
+    }
+
     // these two down here for animation
     private void openDetails() {
         detailPanel.startAnimation(openPanel);
