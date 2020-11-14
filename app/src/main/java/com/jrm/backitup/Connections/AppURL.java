@@ -25,6 +25,10 @@ public class AppURL {
                 return baseURL + "/user/stats";
             case "downloadFile":
                 return baseURL + "/files/download";
+            case "listGroups":
+                return baseURL + "/groups/list";
+            case "createGrp":
+                return baseURL + "/groups/create";
             default:
                 break;
         }

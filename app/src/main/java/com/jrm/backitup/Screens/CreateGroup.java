@@ -82,7 +82,7 @@ public class CreateGroup extends AppCompatActivity {
     public void createGroup(View view) {
         try {
             validate();
-            if(errMsg.length() == 0) {
+            if(errMsg.length() != 0) {
                 toast(errMsg, 0);
             }else{
                 BG group = new BG();
@@ -104,6 +104,7 @@ public class CreateGroup extends AppCompatActivity {
                         toast(response.getString("msg") ,1);
                     }else{
                         toast("Group created!It will be added to your list...", 0);
+                        redirect(Groups.class);
                     }
                 }catch(Exception error) {
                     toast(error.getMessage(), 0);

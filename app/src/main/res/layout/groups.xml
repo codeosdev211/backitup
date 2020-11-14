@@ -114,7 +114,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="5dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRigth_toRightOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/grpTitlebar"
         app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/grpList"/>
@@ -127,6 +127,7 @@
         android:layout_margin="10dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:onClick="redirectToCreateGroup"
         android:id="@+id/grpCreateGroup" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

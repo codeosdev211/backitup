@@ -45,7 +45,6 @@ public class Groups extends AppCompatActivity {
 
     // recyclerview for the user's groups
     RecyclerView groupList, searchList;
-    RecyclerView.LayoutManager layoutMng;
     GroupListAdp groupAdp, searchAdp;
 
     // database query handler
@@ -65,16 +64,15 @@ public class Groups extends AppCompatActivity {
             searchList = (RecyclerView) findViewById(R.id.grpSearchList);
 
             //load list related stuff
-            layoutMng = new LinearLayoutManager(this);
-            groupList.setLayoutManager(layoutMng);
-            searchList.setLayoutManager(layoutMng);
+            groupList.setLayoutManager(new LinearLayoutManager(this));
+            searchList.setLayoutManager(new LinearLayoutManager(this));
             groupAdp = new GroupListAdp(this);
             searchAdp = new GroupListAdp(this);
 
             BU user = new BU();
             user.Code(currentUser.getString("code"));
-            loadGroupsToDb(new JSONArray().put(user));
-            refreshList();
+//            loadGroupsToDb(new JSONArray().put(user));
+//            refreshList();
 
             /* search on text change by calling local database not the server. */
             searchBox.addTextChangedListener(new TextWatcher() {
@@ -113,6 +111,10 @@ public class Groups extends AppCompatActivity {
     // onclick
     public void redirectToDashboard(View view) {
         redirect(Dashboard.class);
+    }
+
+    public void redirectToCreateGroup(View view) {
+        redirect(CreateGroup.class);
     }
     public void openSearch(View view) {
          searchPanel.setVisibility(View.VISIBLE);
