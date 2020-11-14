@@ -29,7 +29,7 @@ public class CreateGroup extends AppCompatActivity {
 
     /*
      * so this page should have been a dialog box or something for just a single field right? Yes
-     * But im planning to add a list to of other users on the platform for the user to add without
+     * But im planning to add a list of other users on the platform for the user to add without
      * asking them in the first place so that they have to stay in the group even if they
      * dont want to and cannot leave cuz they dont want the user to feel bad i guess.!
      */
