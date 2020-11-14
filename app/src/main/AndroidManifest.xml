@@ -2,24 +2,22 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.jrm.backitup">
 
-    <uses-permission
-        android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission
-        android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
+        android:networkSecurityConfig="@xml/network_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:networkSecurityConfig="@xml/network_config"
-        android:hardwareAccelerated="false"
-        android:largeHeap="true"
         android:theme="@style/Theme.BackItUp">
-        <activity android:name=".Screens.Groups"></activity>
+        <activity android:name=".Screens.CreateGroup"></activity>
+        <activity android:name=".Screens.Groups" />
         <activity android:name=".Screens.Dashboard" />
         <activity android:name=".Screens.ChangePassword" />
         <activity android:name=".Screens.RecoverPassword" />

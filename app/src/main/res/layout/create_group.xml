@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Screens.CreateGroup"
+    android:background="@color/white">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/crgrpTitleBar">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:layout_width="0dp"
+            android:layout_weight="1.4"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:src="@drawable/back"
+            android:onClick="redirectToGroups"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_weight="8.6"
+            android:layout_height="match_parent"
+            android:text="Create A Group"
+            android:textSize="22sp"
+            android:textColor="@color/black"
+            android:gravity="center_vertical" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="After your group is created, people will be able to find your group by group name or your name"
+        android:textColor="@color/grey"
+        android:textSize="14sp"
+        android:gravity="start"
+        android:padding="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/crgrpTitleBar"
+        android:id="@+id/crgrpInfo"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_h"
+        android:hint="Group Name"
+        android:textColorHint="@color/grey"
+        android:textColor="@color/black"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/edittext_layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/crgrpInfo"
+        android:id="@+id/crgrpName"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_h"
+        android:text="Submit"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:background="@drawable/submit_layout"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/crgrpName"
+        android:onClick="createGroup"
+        android:id="@+id/crgrpSubmit"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

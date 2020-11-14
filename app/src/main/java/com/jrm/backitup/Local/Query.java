@@ -11,10 +11,13 @@ public class Query {
     public static final String dropBG = "DROP TABLE BG;";
 
     Context context;
+    DbHandler handler;
 
     public Query(Context context) {
         this.context = context;
+        handler = new DbHandler(context);
     }
+
 
     public void writeGroup(JSONObject data) throws Exception{
         ContentValues values = new ContentValues();
@@ -22,11 +25,15 @@ public class Query {
         values.put("name", data.getString("name"));
         values.put("owner", data.getString("owner"));
         values.put("userCount", data.getString("userCount"));
-        new DbHandler(context).insert("BG", values);
+        handler.insert("BG", values);
     }
 
     public JSONArray readGroups(String searchValue) throws Exception {
-       return new DbHandler(context).select("select * from BG where name like '%"+ searchValue +"%' OR owner like '%"+ searchValue +"%';");
+       return handler.select("select * from BG where name like '%"+ searchValue +"%' OR owner like '%"+ searchValue +"%';");
+    }
+
+    public void deleteGroups() {
+        handler.truncate("BG");
     }
 
 }

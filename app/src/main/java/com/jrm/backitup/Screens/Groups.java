@@ -111,6 +111,9 @@ public class Groups extends AppCompatActivity {
     }
 
     // onclick
+    public void redirectToDashboard(View view) {
+        redirect(Dashboard.class);
+    }
     public void openSearch(View view) {
          searchPanel.setVisibility(View.VISIBLE);
     }
@@ -129,8 +132,13 @@ public class Groups extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        query.deleteGroups();
+    }
 
-        // api handling
+    // api handling
     private void loadGroupsToDb(JSONArray data) {
         new API().callServer(getApplicationContext(), 1, "listGroups", data, new IAPI() {
 
