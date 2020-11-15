@@ -128,8 +128,7 @@ public class Groups extends AppCompatActivity {
                     if(response.getString("status").equals("1")) {
                         toast(response.getString("msg"), 1);
                     }else{
-                        groupAdp.addUserGrps(response.getJSONArray("userGroups"));
-                        groupAdp.addPublicGrps(response.getJSONArray("publicGroups"));
+                        groupAdp.add(response.getJSONArray("userGroups"),response.getJSONArray("publicGroups"));
                         grpList.setAdapter(groupAdp);
                     }
                 }catch(Exception error){

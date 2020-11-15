@@ -71,25 +71,27 @@ public class GroupsAdp extends RecyclerView.Adapter<GroupHolder>{
     }
 
     @Override
-    public int getItemCount() { return 0; }
+    public int getItemCount() { return (isSearch) ? searchList.size() : userGroups.size(); }
 
-    public void addUserGrps(JSONArray data) throws Exception {
+    public void add(JSONArray userList, JSONArray publicList) throws Exception {
         userGroups.clear();
-        for(int each = 0; each < data.length(); each++) {
-            userGroups.add(data.getJSONObject(each));
+        grpList.clear();
+        for(int each = 0; each < userList.length(); each++) {
+            userGroups.add(userList.getJSONObject(each));
         }
         isSearch = false;
         this.notifyDataSetChanged();
-    }
 
-    public void addPublicGrps(JSONArray data) throws Exception {
-        grpList.clear();
-        for(int each = 0; each < data.length(); each++) {
-            grpList.add(data.getJSONObject(each));
+        for(int each = 0; each < publicList.length(); each++) {
+            grpList.add(publicList.getJSONObject(each));
         }
-        searchList = grpList;
     }
 
+
+    /*
+    * search should have been with server request or database, i know ....
+    * but i needed to try something out.
+    */
     public void search(CharSequence value) throws Exception {
         searchList.clear();
         JSONObject each = null;
