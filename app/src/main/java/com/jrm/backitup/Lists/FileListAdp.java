@@ -26,7 +26,7 @@ import java.util.ArrayList;
  */
 public class FileListAdp extends RecyclerView.Adapter<FileListHolder> {
     Context context;
-    // this is basically the half BF class in JSONObject form
+    // this is basically a list of half the BF class in JSONObject form
     ArrayList<JSONObject> fileList;
 
     public FileListAdp(Context context) {
