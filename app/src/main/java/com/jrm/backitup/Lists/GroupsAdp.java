@@ -17,6 +17,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+/*
+ *  @Author Jayesh (codeos)
+ * I hate comments but this is for you to understand my strange code.
+ * My function names will mostly explain the code.
+ */
 public class GroupsAdp extends RecyclerView.Adapter<GroupHolder>{
     Context context;
     // this is basically a list of the three tables (BUG, BG, BU) in jsonobject form
