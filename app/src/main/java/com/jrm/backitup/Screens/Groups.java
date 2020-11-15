@@ -95,7 +95,7 @@ public class Groups extends AppCompatActivity {
     }
 
     public void redirectToCreateGroup(View view) {
-        redirect(Dashboard.class);
+        redirect(CreateGroup.class);
     }
 
     public void showSearchPanel(View view) {
