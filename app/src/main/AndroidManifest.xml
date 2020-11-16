@@ -16,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BackItUp">
-        <activity android:name=".Screens.CreateGroup"></activity>
+        <activity android:name=".Screens.ShareRoom"></activity>
+        <activity android:name=".Screens.CreateGroup" />
         <activity android:name=".Screens.Groups" />
         <activity android:name=".Screens.Dashboard" />
         <activity android:name=".Screens.ChangePassword" />
