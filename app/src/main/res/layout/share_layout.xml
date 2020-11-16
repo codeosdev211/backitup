@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/popup_layout">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Share one of your files"
+        android:textSize="22sp"
+        android:textColor="@color/appDark"
+        android:layout_margin="10dp"
+        android:padding="5dp" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_h"
+        android:layout_margin="10dp"
+        android:background="@drawable/edittext_layout"
+        android:id="@+id/userFiles" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Share"
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:background="@drawable/submit_layout"
+        android:layout_margin="10dp"
+        android:layout_gravity="end"
+        android:id="@+id/shareFile"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
