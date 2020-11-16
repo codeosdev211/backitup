@@ -126,7 +126,6 @@ public class ShareRoom extends AppCompatActivity {
     private void loadList() {
         try {
             BG group = new BG();
-            group.OwnerCode(currentGroup.getString("ownerCode"));
             group.Code(currentGroup.getString("code"));
             loadGroupShares(new JSONArray().put(group));
         }catch(Exception error) {
@@ -136,7 +135,7 @@ public class ShareRoom extends AppCompatActivity {
 
     // api handling
     private void loadGroupShares(JSONArray data) {
-        new API().callServer(getApplicationContext(), 1, "grpShares", data, new IAPI() {
+        new API().callServer(getApplicationContext(), 1, "sharedOnGrp", data, new IAPI() {
             @Override
             public void onSuccess(JSONObject response) {
                 try {
@@ -159,7 +158,7 @@ public class ShareRoom extends AppCompatActivity {
     }
 
     private void sendFile(JSONArray data) {
-        new API().callServer(getApplicationContext(), 1, "shareFile", data, new IAPI() {
+        new API().callServer(getApplicationContext(), 1, "shareOnGroup", data, new IAPI() {
             @Override
             public void onSuccess(JSONObject response) {
                 try {
@@ -184,7 +183,7 @@ public class ShareRoom extends AppCompatActivity {
         BU user = new BU();
         user.Code(currentUser.getString("code"));
 
-        new API().callServer(getApplicationContext(), 1, "userFiles", new JSONArray().put(user), new IAPI() {
+        new API().callServer(getApplicationContext(), 1, "listFile", new JSONArray().put(user), new IAPI() {
             @Override
             public void onSuccess(JSONObject response) {
                 try {
