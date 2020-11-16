@@ -21,6 +21,7 @@ import com.jrm.backitup.Connections.IAPI;
 import com.jrm.backitup.Lists.ShareAdp;
 import com.jrm.backitup.Local.AppPref;
 import com.jrm.backitup.Models.BF;
+import com.jrm.backitup.Models.BFG;
 import com.jrm.backitup.Models.BG;
 import com.jrm.backitup.Models.BU;
 import com.jrm.backitup.R;
@@ -45,6 +46,7 @@ public class ShareRoom extends AppCompatActivity {
     ShareAdp shareAdp;
 
     ArrayAdapter<JSONObject> filesAdapter;
+    //collecting extras from bundle, sent by GroupsAdp
     JSONObject currentGroup;
 
     @Override
@@ -103,8 +105,15 @@ public class ShareRoom extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     // call api for upload.
-//                    userFiles.getSelectedItem();
-                    // pending .......
+                    try {
+                        BFG shareLog = new BFG();
+                        shareLog.FileCode(filesAdapter.getItem(userFiles.getSelectedItemPosition()).getString("code"));
+                        shareLog.GroupCode(currentGroup.getString("code"));
+                        shareLog.AddedBy(currentUser.getString("code"));
+                        sendFile(new JSONArray().put(shareLog));
+                    }catch(Exception error) {
+                        toast(error.getMessage(), 0);
+                    }
                 }
             });
 
@@ -149,6 +158,28 @@ public class ShareRoom extends AppCompatActivity {
         });
     }
 
+    private void sendFile(JSONArray data) {
+        new API().callServer(getApplicationContext(), 1, "shareFile", data, new IAPI() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                try {
+                    if(response.getString("status").equals("1")) {
+                        toast(response.getString("msg"), 1);
+                    }else{
+                        toast("File Shared", 0);
+                        loadList();
+                    }
+                }catch(Exception error) {
+                    toast(error.getMessage(), 0);
+                }
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                toast(error.getMessage(), 1);
+            }
+        });
+    }
     private void loadUserFiles() throws Exception {
         BU user = new BU();
         user.Code(currentUser.getString("code"));
@@ -180,9 +211,5 @@ public class ShareRoom extends AppCompatActivity {
             }
         });
     }
-
-
-
-
 
 }

@@ -56,6 +56,7 @@ public class ShareAdp extends RecyclerView.Adapter<ShareHolder> {
                     /*
                      * the function handles onClick on dash because we load the detail layout there.
                      * */
+
                 }
             });
 

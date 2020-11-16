@@ -1,6 +1,7 @@
 package com.jrm.backitup.Lists;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jrm.backitup.R;
+import com.jrm.backitup.Screens.Dashboard;
+import com.jrm.backitup.Screens.ShareRoom;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -64,6 +67,21 @@ public class GroupsAdp extends RecyclerView.Adapter<GroupHolder>{
             holder.grpName.setText(group.getString("name"));
             holder.grpOwner.setText("Owner: " + group.getString("firstName"));
             holder.grpUserCount.setText("Total Users: " + group.getString("userCount"));
+
+            final JSONObject tempGrp = group;
+            holder.grpParent.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        Intent goTo = new Intent(context.getApplicationContext(), ShareRoom.class);
+                        goTo.putExtra("group", tempGrp.toString());
+                        context.getApplicationContext().startActivity(goTo);
+                    }catch(Exception error) {
+                        Toast.makeText(context.getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT);
+                    }
+                }
+            });
+
 
         }catch(Exception error) {
             Toast.makeText(context.getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
