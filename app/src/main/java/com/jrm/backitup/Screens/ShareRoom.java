@@ -87,6 +87,7 @@ public class ShareRoom extends AppCompatActivity {
         redirect(Groups.class);
     }
 
+
     public void downloadFile(JSONObject file) {
         try {
             BF reqFile = new BF();
