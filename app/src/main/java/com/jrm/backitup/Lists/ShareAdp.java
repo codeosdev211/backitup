@@ -5,12 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jrm.backitup.R;
+import com.jrm.backitup.Screens.Dashboard;
+import com.jrm.backitup.Screens.ShareRoom;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -56,7 +59,7 @@ public class ShareAdp extends RecyclerView.Adapter<ShareHolder> {
                     /*
                      * the function handles onClick on dash because we load the detail layout there.
                      * */
-
+                    ((ShareRoom)context).downloadFile(sharedList.get(position));
                 }
             });
 
@@ -81,12 +84,12 @@ class ShareHolder extends RecyclerView.ViewHolder {
 
     // elements that are in share_list.xml
     public TextView slName, slFile;
-    public Button slDownload;
+    public ImageButton slDownload;
 
     public ShareHolder(View layout) {
         super(layout);
         slName = (TextView) layout.findViewById(R.id.slName);
         slFile = (TextView) layout.findViewById(R.id.slFile);
-        slDownload = (Button) layout.findViewById(R.id.slDownload);
+        slDownload = (ImageButton) layout.findViewById(R.id.slDownload);
     }
 }

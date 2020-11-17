@@ -73,11 +73,11 @@ public class GroupsAdp extends RecyclerView.Adapter<GroupHolder>{
                 @Override
                 public void onClick(View v) {
                     try {
-                        Intent goTo = new Intent(context.getApplicationContext(), ShareRoom.class);
+                        Intent goTo = new Intent(context, ShareRoom.class);
                         goTo.putExtra("group", tempGrp.toString());
-                        context.getApplicationContext().startActivity(goTo);
+                        context.startActivity(goTo);
                     }catch(Exception error) {
-                        Toast.makeText(context.getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT);
+                        Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT);
                     }
                 }
             });

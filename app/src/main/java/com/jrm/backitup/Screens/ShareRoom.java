@@ -20,6 +20,7 @@ import com.jrm.backitup.Connections.API;
 import com.jrm.backitup.Connections.IAPI;
 import com.jrm.backitup.Lists.ShareAdp;
 import com.jrm.backitup.Local.AppPref;
+import com.jrm.backitup.Local.FileHelper;
 import com.jrm.backitup.Models.BF;
 import com.jrm.backitup.Models.BFG;
 import com.jrm.backitup.Models.BG;
@@ -45,7 +46,8 @@ public class ShareRoom extends AppCompatActivity {
     RecyclerView srList;
     ShareAdp shareAdp;
 
-    ArrayAdapter<JSONObject> filesAdapter;
+    ArrayAdapter<String> filesAdapter;
+    ArrayList<JSONObject> userFiles;
     //collecting extras from bundle, sent by GroupsAdp
     JSONObject currentGroup;
 
@@ -85,6 +87,17 @@ public class ShareRoom extends AppCompatActivity {
         redirect(Groups.class);
     }
 
+    public void downloadFile(JSONObject file) {
+        try {
+            BF reqFile = new BF();
+            reqFile.OwnerCode(file.getString("ownerCode"));
+            reqFile.Code(file.getString("code"));
+            requestDownload(new JSONArray().put(reqFile));
+        }catch(Exception error) {
+            toast("Could not download file", 0);
+        }
+    }
+
     public void shareFiles(View view) {
         try {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -96,8 +109,8 @@ public class ShareRoom extends AppCompatActivity {
             dialog.show();
 
             // elements for dialog
-            Spinner userFiles = layout.findViewById(R.id.userFiles);
-            userFiles.setAdapter(filesAdapter);
+            Spinner userFileSpinner = layout.findViewById(R.id.userFiles);
+            userFileSpinner.setAdapter(filesAdapter);
 
             //onclicks for dialog
             Button shareFile = layout.findViewById(R.id.shareFile);
@@ -107,7 +120,7 @@ public class ShareRoom extends AppCompatActivity {
                     // call api for upload.
                     try {
                         BFG shareLog = new BFG();
-                        shareLog.FileCode(filesAdapter.getItem(userFiles.getSelectedItemPosition()).getString("code"));
+                        shareLog.FileCode(userFiles.get(userFileSpinner.getSelectedItemPosition() - 1).getString("code"));
                         shareLog.GroupCode(currentGroup.getString("code"));
                         shareLog.AddedBy(currentUser.getString("code"));
                         sendFile(new JSONArray().put(shareLog));
@@ -157,8 +170,32 @@ public class ShareRoom extends AppCompatActivity {
         });
     }
 
+    private void requestDownload(JSONArray data) {
+        new API().callServer(getApplicationContext(), 1, "downloadFile", data, new IAPI() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                try {
+                    if(response.getString("status").equals("1")) {
+                        toast(response.getString("msg"), 1);
+                    }else{
+                        FileHelper helper = new FileHelper(getApplicationContext(), currentUser.getString("code"));
+                        helper.writeFile(response);
+                        toast("File Downloaded", 0);
+                    }
+                }catch(Exception error) {
+                    toast(error.getMessage(), 1);
+                }
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                toast(error.getMessage(), 1);
+            }
+        });
+    }
+
     private void sendFile(JSONArray data) {
-        new API().callServer(getApplicationContext(), 1, "shareOnGroup", data, new IAPI() {
+        new API().callServer(getApplicationContext(), 1, "shareOnGrp", data, new IAPI() {
             @Override
             public void onSuccess(JSONObject response) {
                 try {
@@ -190,13 +227,16 @@ public class ShareRoom extends AppCompatActivity {
                     if(response.getString("status").equals("1")) {
                         toast(response.getString("msg"), 1);
                     }else{
-                        ArrayList<JSONObject> userFiles = new ArrayList<>();
+                        userFiles = new ArrayList<>();
                         JSONArray files = response.getJSONArray("data");
+                        String names[] = new String[files.length() + 1];
+                        names[0] = "-- Select Files --";
                         for(int each = 0; each < files.length(); each++) {
                             userFiles.add(files.getJSONObject(each));
+                            names[each + 1] = files.getJSONObject(each).getString("name");
                         }
-                        filesAdapter = new ArrayAdapter<JSONObject>(getApplicationContext(),
-                                android.R.layout.simple_spinner_dropdown_item, userFiles);
+                        filesAdapter = new ArrayAdapter<String>(getApplicationContext(),
+                                android.R.layout.simple_spinner_dropdown_item, names);
                         filesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     }
                 }catch(Exception error) {
