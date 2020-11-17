@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/appDark"
+    android:layout_margin="2dp"
+    android:id="@+id/memParent">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Member Name"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:padding="10dp"
+        android:layout_marginLeft="5dp"
+        android:background="@color/white"
+        android:id="@+id/memberName"/>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
