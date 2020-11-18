@@ -87,6 +87,15 @@ public class ShareRoom extends AppCompatActivity {
         redirect(Groups.class);
     }
 
+    public void redirectToGroupInfo(View view) {
+        try {
+            Intent goTo = new Intent(getApplicationContext(), GroupInfo.class);
+            goTo.putExtra("group", currentGroup.toString());
+            startActivity(goTo);
+        }catch(Exception error) {
+            toast("Could not load group info", 0);
+        }
+    }
 
     public void downloadFile(JSONObject file) {
         try {

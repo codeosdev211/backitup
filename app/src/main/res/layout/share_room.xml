@@ -16,7 +16,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/srTitlebar">
-
         <androidx.appcompat.widget.AppCompatImageButton
             android:layout_width="0dp"
             android:layout_weight="1.4"
@@ -41,7 +40,8 @@
             android:layout_height="match_parent"
             android:background="@color/white"
             android:layout_gravity="end"
-            android:src="@drawable/info"/>
+            android:src="@drawable/info"
+            android:onClick="redirectToGroupInfo" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

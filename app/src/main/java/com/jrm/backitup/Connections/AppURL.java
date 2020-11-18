@@ -33,6 +33,8 @@ public class AppURL {
                 return baseURL + "/groups/share";
             case "sharedOnGrp":
                 return baseURL + "/groups/shared";
+            case "membersList":
+                return baseURL + "/groups/members";
             default:
                 break;
         }
